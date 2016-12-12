@@ -34,6 +34,4 @@ private:
 	bool bHaveAimSolution;
 
 	void MoveBarrelTowards(FVector AimDirection);
-
-	void RotateTurretTowards(FVector AimDirection);
 };
