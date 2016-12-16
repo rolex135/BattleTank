@@ -1,7 +1,7 @@
 // Copyright MKProductions
 
 #include "BattleTank.h"
-#include "Tank.h"
+#include "TankAimingComponent.h"
 #include "../Public/TankAIController.h"
 
 
@@ -15,15 +15,16 @@ void ATankAIController::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
 
-	auto PlayerTank = Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
-	auto AITank = Cast<ATank>(GetPawn());
+	auto PlayerTank = GetWorld()->GetFirstPlayerController()->GetPawn();
+	auto AITank = GetPawn();
 
-	if (ensure(PlayerTank))
-	{
-		MoveToActor(PlayerTank, AcceptanceRadius);//TODO check radius is in cm
+	if (!ensure(PlayerTank && AITank)) { return; }
+	
+	MoveToActor(PlayerTank, AcceptanceRadius);
 
-		AITank->AimAt(PlayerTank->GetActorLocation());
+	auto AimingComponent = AITank->FindComponentByClass<UTankAimingComponent>();
+	AimingComponent->AimAt(PlayerTank->GetActorLocation());
 		
-		AITank->Fire();
-	}
+	//TODO FIX FIRING
+	//AITank->Fire();
 }

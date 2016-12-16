@@ -1,14 +1,13 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright MKProductions
 
 #pragma once
 
 #include "AIController.h"
 #include "TankAIController.generated.h"
 
-//Forward declaration
-class ATank;
+
 /**
- * 
+ * Responsible for Controlling AI Tanks
  */
 UCLASS()
 class BATTLETANK_API ATankAIController : public AAIController
