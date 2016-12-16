@@ -18,7 +18,13 @@ ATank::ATank()
 
 void ATank::AimAt(FVector HitLocation)
 {
+	if (!TankAimingComponent) { return; }
 	TankAimingComponent->AimAt(HitLocation, LaunchSpeed);
+}
+
+void ATank::BeginPlay()
+{
+	Super::BeginPlay();
 }
 
 void ATank::Fire()
