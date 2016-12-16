@@ -4,7 +4,6 @@
 #include "TankTrack.h"
 #include "TankMovementComponent.h"
 
-
 void UTankMovementComponent::Initialize(UTankTrack* LeftTrackToSet, UTankTrack* RightTrackToSet)
 {
 	LeftTrack = LeftTrackToSet;
