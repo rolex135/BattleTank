@@ -14,13 +14,10 @@ UCLASS()
 class BATTLETANK_API ATankPlayerController : public APlayerController
 {
 	GENERATED_BODY()
-	
-public:
+
+protected:
+	UFUNCTION(BlueprintCallable, Category = "Setup")
 	ATank* GetControlledTank() const;
-
-	virtual void BeginPlay() override;
-
-	virtual void Tick(float DeltaTime) override;
 
 private:
 	UPROPERTY(EditDefaultsOnly)
@@ -33,7 +30,7 @@ private:
 	float LineTraceRange = 1000000.f;
 
 	//Start the tank moving the barrel so that a shot would it where
-	//crosshair intersects the world
+	//cross hair intersects the world
 	void AimTowardsCrosshair();
 
 	bool GetSightRayHitLocation(FVector& HitLocation) const;
@@ -41,4 +38,9 @@ private:
 	bool GetLookDirection(FVector2D ScreenLocation, FVector& LookDirection) const;
 
 	bool GetLookVectorHitLocation(FVector LookDirection, FVector& HitLocation) const;
+
+
+	virtual void BeginPlay() override;
+
+	virtual void Tick(float DeltaTime) override;
 };
