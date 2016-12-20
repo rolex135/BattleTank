@@ -56,8 +56,6 @@ private:
 
 	double LastFireTime = 0;
 
-	int32 AmmoCount = 3;
-
 	FVector AimDirection;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
@@ -68,6 +66,9 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	TSubclassOf<AProjectile> ProjectileBlueprint;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+	int32 AmmoCount = 3;
 
 	void MoveBarrelTowards(FVector AimDirection);
 
