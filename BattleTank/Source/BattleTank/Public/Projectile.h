@@ -24,10 +24,10 @@ public:
 
 private:
 	UPROPERTY(VisibleAnywhere, Category = "Components")
-	UStaticMeshComponent* CollisionMesh = nullptr;
+		UStaticMeshComponent* CollisionMesh = nullptr;
 
 	UPROPERTY(VisibleAnywhere, Category = "Components")
-	UParticleSystemComponent* LaunchBlast = nullptr;
+		UParticleSystemComponent* LaunchBlast = nullptr;
 
 	UProjectileMovementComponent* ProjectileMovement = nullptr;
 };
