@@ -5,7 +5,6 @@
 #include "AIController.h"
 #include "TankAIController.generated.h"
 
-
 /**
  * Responsible for Controlling AI Tanks
  */
@@ -17,12 +16,17 @@ class BATTLETANK_API ATankAIController : public AAIController
 protected:
 	//How close can the AI tank get
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
-	float AcceptanceRadius = 8000.f;
+	float AcceptanceRadius = 4000.f;
 
 private:
 
 	virtual void BeginPlay() override;
 
+	virtual void SetPawn(APawn* InPawn) override;
+
 	virtual void Tick(float DeltaSeconds) override;
+
+	UFUNCTION(BlueprintCallable, Category = "Setup")
+	void OnPossesedTankDeath();
 
 };

@@ -30,6 +30,9 @@ private:
 	UPROPERTY(EditDefaultsOnly)
 	float LineTraceRange = 1000000.f;
 
+	UFUNCTION(BlueprintCallable, Category = "Setup")
+	void OnPossesedTankDeath();
+
 	//Start the tank moving the barrel so that a shot would it where
 	//cross hair intersects the world
 	void AimTowardsCrosshair();
@@ -43,4 +46,7 @@ private:
 	virtual void BeginPlay() override;
 
 	virtual void Tick(float DeltaTime) override;
+
+	virtual void SetPawn(APawn* InPawn) override;
+
 };
