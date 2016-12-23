@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright MKProductions
 
 #pragma once
 
@@ -17,7 +17,7 @@ public:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	void LaunchProjectile(float speed);
+	void LaunchProjectile(float Speed);
 
 private:
 	UFUNCTION(BlueprintCallable, Category = "Component")

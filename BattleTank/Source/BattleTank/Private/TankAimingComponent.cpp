@@ -4,6 +4,7 @@
 #include "TankBarrel.h"
 #include "TankTurret.h"
 #include "Projectile.h"
+#include "FlameThrower.h"
 #include "TankAimingComponent.h"
 
 
@@ -116,6 +117,19 @@ void UTankAimingComponent::Fire()
 		AmmoCount--;
 	}
 }
+
+void UTankAimingComponent::ThrowFlame()
+{
+	if (!ensure(Barrel)) { return; }
+	if (!ensure(FlameThrowerBlueprint)) { return; }
+
+	auto FlameThrowerLocation = Barrel->GetSocketLocation(FName("Projectile"));
+	auto FlameThrowerRotation = Barrel->GetSocketRotation(FName("Projectile"));
+	auto FlameThrower = GetWorld()->SpawnActor<AFlameThrower>(FlameThrowerBlueprint, FlameThrowerLocation, FlameThrowerRotation);
+
+	FlameThrower->FireFlame(LaunchSpeed);
+}
+
 bool UTankAimingComponent::IsBarrelMoving()
 {
 	if (!ensure(Barrel)) { return false; }

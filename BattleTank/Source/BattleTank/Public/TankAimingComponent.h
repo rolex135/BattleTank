@@ -20,6 +20,7 @@ enum class EFiringState : uint8
 class UTankBarrel;
 class UTankTurret;
 class AProjectile;
+class AFlameThrower;
 
 // Holds barrel's properties
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -36,6 +37,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Firing")
 	int32 GetRoundsLeft() const;
+
+	UFUNCTION(BlueprintCallable, Category = "Firing")
+	void ThrowFlame();
 
 	void AimAt(FVector HitLocation);
 
@@ -66,6 +70,9 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	TSubclassOf<AProjectile> ProjectileBlueprint;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	TSubclassOf<AFlameThrower> FlameThrowerBlueprint;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	int32 AmmoCount = 3;
