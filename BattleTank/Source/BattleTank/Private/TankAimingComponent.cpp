@@ -6,6 +6,7 @@
 #include "Projectile.h"
 #include "FlameThrower.h"
 #include "TankAimingComponent.h"
+#include "TankFuelComponent.h"
 
 
 // Sets default values for this component's properties
@@ -22,6 +23,7 @@ void UTankAimingComponent::BeginPlay()
 
 void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)
 {
+	/*
 	if (GetFuelLeft() <= 0)
 	{
 		FuelState = EFuelState::Empty;
@@ -34,7 +36,7 @@ void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickTy
 	{
 		FuelState = EFuelState::HalfFull;
 	}
-
+	*/
 	if (GetRoundsLeft() <= 0)
 	{
 		FiringState = EFiringState::OutOfAmmo;
@@ -71,13 +73,14 @@ EFuelState UTankAimingComponent::GetFuelState() const
 
 int32 UTankAimingComponent::GetFuelLeft() const
 {
-	return FuelCount;
+	return Fuel->GetFuelAmount();
 }
 
-void UTankAimingComponent::Initialize(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet)
+void UTankAimingComponent::Initialize(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet, UTankFuelComponent* TankFuelToSet)
 {
 	Barrel = BarrelToSet;
 	Turret = TurretToSet;
+	Fuel = TankFuelToSet;
 }
 
 void UTankAimingComponent::AimAt(FVector HitLocation)
@@ -147,13 +150,16 @@ void UTankAimingComponent::ThrowFlame()
 	{
 		if (!ensure(Barrel)) { return; }
 		if (!ensure(FlameThrowerBlueprint)) { return; }
+		if (!ensure(Fuel)) { return; }
 
 		auto FlameThrowerLocation = Barrel->GetSocketLocation(FName("FlameThrow"));
 		auto FlameThrowerRotation = Barrel->GetSocketRotation(FName("FlameThrow"));
 		auto FlameThrower = GetWorld()->SpawnActor<AFlameThrower>(FlameThrowerBlueprint, FlameThrowerLocation, FlameThrowerRotation);
 
 		FlameThrower->FireFlame(FlameDistance);
-		FuelCount--;
+		// TODO New Fuel amount to set
+		int32 FuelToSet = Fuel->GetFuelAmount() - 1;
+		Fuel->SetFuelAmount(FuelToSet);
 	}
 }
 

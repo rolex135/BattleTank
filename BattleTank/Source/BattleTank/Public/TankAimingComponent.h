@@ -30,6 +30,7 @@ class UTankBarrel;
 class UTankTurret;
 class AProjectile;
 class AFlameThrower;
+class UTankFuelComponent;
 
 // Holds barrel's properties
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -39,7 +40,7 @@ class BATTLETANK_API UTankAimingComponent : public UActorComponent
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Setup")
-	void Initialize(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
+	void Initialize(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet, UTankFuelComponent* TankFuelToSet);
 
 	UFUNCTION(BlueprintCallable, Category = "Firing")
 	void Fire();
@@ -73,6 +74,8 @@ private:
 
 	UTankTurret* Turret = nullptr;
 
+	UTankFuelComponent* Fuel = nullptr;
+
 	bool bHaveAimSolution;
 
 	double LastFireTime = 0;
@@ -96,9 +99,6 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	int32 AmmoCount = 20;
-
-	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-	int32 FuelCount = 200;
 
 	void MoveBarrelTowards(FVector AimDirection);
 
