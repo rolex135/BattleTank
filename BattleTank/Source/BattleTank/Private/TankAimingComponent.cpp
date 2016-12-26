@@ -22,6 +22,19 @@ void UTankAimingComponent::BeginPlay()
 
 void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)
 {
+	if (GetFuelLeft() <= 0)
+	{
+		FuelState = EFuelState::Empty;
+	}
+	else if(GetFuelLeft() >= 200)
+	{
+		FuelState = EFuelState::Full;
+	}
+	else
+	{
+		FuelState = EFuelState::HalfFull;
+	}
+
 	if (GetRoundsLeft() <= 0)
 	{
 		FiringState = EFiringState::OutOfAmmo;
@@ -49,6 +62,16 @@ EFiringState UTankAimingComponent::GetFiringState() const
 int32 UTankAimingComponent::GetRoundsLeft() const
 {
 	return AmmoCount;
+}
+
+EFuelState UTankAimingComponent::GetFuelState() const
+{
+	return FuelState;
+}
+
+int32 UTankAimingComponent::GetFuelLeft() const
+{
+	return FuelCount;
 }
 
 void UTankAimingComponent::Initialize(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet)
@@ -120,14 +143,18 @@ void UTankAimingComponent::Fire()
 
 void UTankAimingComponent::ThrowFlame()
 {
-	if (!ensure(Barrel)) { return; }
-	if (!ensure(FlameThrowerBlueprint)) { return; }
+	if (FuelState == EFuelState::Full || FuelState == EFuelState::HalfFull)
+	{
+		if (!ensure(Barrel)) { return; }
+		if (!ensure(FlameThrowerBlueprint)) { return; }
 
-	auto FlameThrowerLocation = Barrel->GetSocketLocation(FName("FlameThrow"));
-	auto FlameThrowerRotation = Barrel->GetSocketRotation(FName("FlameThrow"));
-	auto FlameThrower = GetWorld()->SpawnActor<AFlameThrower>(FlameThrowerBlueprint, FlameThrowerLocation, FlameThrowerRotation);
+		auto FlameThrowerLocation = Barrel->GetSocketLocation(FName("FlameThrow"));
+		auto FlameThrowerRotation = Barrel->GetSocketRotation(FName("FlameThrow"));
+		auto FlameThrower = GetWorld()->SpawnActor<AFlameThrower>(FlameThrowerBlueprint, FlameThrowerLocation, FlameThrowerRotation);
 
-	FlameThrower->FireFlame(LaunchSpeed);
+		FlameThrower->FireFlame(FlameDistance);
+		FuelCount--;
+	}
 }
 
 bool UTankAimingComponent::IsBarrelMoving()

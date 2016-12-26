@@ -16,6 +16,15 @@ enum class EFiringState : uint8
 	OutOfAmmo
 };
 
+// Enum for fuel state
+UENUM()
+enum class EFuelState : uint8
+{
+	Full,
+	HalfFull,
+	Empty
+};
+
 //Forward declaration
 class UTankBarrel;
 class UTankTurret;
@@ -39,15 +48,23 @@ public:
 	int32 GetRoundsLeft() const;
 
 	UFUNCTION(BlueprintCallable, Category = "Firing")
+	int32 GetFuelLeft() const;
+
+	UFUNCTION(BlueprintCallable, Category = "Firing")
 	void ThrowFlame();
 
 	void AimAt(FVector HitLocation);
 
 	EFiringState GetFiringState() const;
 
+	EFuelState GetFuelState() const;
+
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
 	EFiringState FiringState = EFiringState::Reloading;
+
+	UPROPERTY(BlueprintReadOnly, Category = "State")
+	EFuelState FuelState = EFuelState::Full;
 
 private:
 	UTankAimingComponent();
@@ -66,6 +83,9 @@ private:
 	float LaunchSpeed = 4000.f;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+	float FlameDistance = 2000.f;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float ReloadTimeInSeconds = 3.0f;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
@@ -75,7 +95,10 @@ private:
 	TSubclassOf<AFlameThrower> FlameThrowerBlueprint;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-	int32 AmmoCount = 3;
+	int32 AmmoCount = 20;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+	int32 FuelCount = 200;
 
 	void MoveBarrelTowards(FVector AimDirection);
 

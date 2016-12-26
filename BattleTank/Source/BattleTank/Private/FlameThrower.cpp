@@ -49,6 +49,7 @@ void AFlameThrower::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor,
 	FireBlast->Deactivate();
 	ImpactBlast->Activate();
 	ExplosionForce->FireImpulse();
+	SetRootComponent(ImpactBlast);
 	CollisionMesh->DestroyComponent();
 
 	UGameplayStatics::ApplyRadialDamage(
