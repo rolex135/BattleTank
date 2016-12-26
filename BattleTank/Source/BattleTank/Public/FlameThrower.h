@@ -26,8 +26,23 @@ private:
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	UParticleSystemComponent* FireBlast = nullptr;
 
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	UParticleSystemComponent* ImpactBlast = nullptr;
+
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	URadialForceComponent* ExplosionForce = nullptr;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	float FlameThrowerDamage = 5.f;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	float DestroyDelay = 0.5f;
+
 	UProjectileMovementComponent* FlameMovement = nullptr;
 
-	float DestroyDelay = 2.f;
-	
+	UFUNCTION(BlueprintCallable, Category = "Component")
+	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent,
+			FVector NormalImpulse, const FHitResult& Hit);
+
+	void OnTimerExpire();
 };

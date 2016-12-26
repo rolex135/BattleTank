@@ -20,10 +20,6 @@ public:
 	void LaunchProjectile(float Speed);
 
 private:
-	UFUNCTION(BlueprintCallable, Category = "Component")
-	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent,
-		FVector NormalImpulse, const FHitResult& Hit);
-
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	UStaticMeshComponent* CollisionMesh = nullptr;
 
@@ -43,6 +39,10 @@ private:
 	float ProjectileDamage = 20.f;
 
 	UProjectileMovementComponent* ProjectileMovement = nullptr;
+
+	UFUNCTION(BlueprintCallable, Category = "Component")
+	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent,
+			FVector NormalImpulse, const FHitResult& Hit);
 
 	void OnTimerExpire();
 

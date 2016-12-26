@@ -123,8 +123,8 @@ void UTankAimingComponent::ThrowFlame()
 	if (!ensure(Barrel)) { return; }
 	if (!ensure(FlameThrowerBlueprint)) { return; }
 
-	auto FlameThrowerLocation = Barrel->GetSocketLocation(FName("Projectile"));
-	auto FlameThrowerRotation = Barrel->GetSocketRotation(FName("Projectile"));
+	auto FlameThrowerLocation = Barrel->GetSocketLocation(FName("FlameThrow"));
+	auto FlameThrowerRotation = Barrel->GetSocketRotation(FName("FlameThrow"));
 	auto FlameThrower = GetWorld()->SpawnActor<AFlameThrower>(FlameThrowerBlueprint, FlameThrowerLocation, FlameThrowerRotation);
 
 	FlameThrower->FireFlame(LaunchSpeed);
