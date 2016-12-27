@@ -23,20 +23,6 @@ void UTankAimingComponent::BeginPlay()
 
 void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)
 {
-	/*
-	if (GetFuelLeft() <= 0)
-	{
-		FuelState = EFuelState::Empty;
-	}
-	else if(GetFuelLeft() >= 200)
-	{
-		FuelState = EFuelState::Full;
-	}
-	else
-	{
-		FuelState = EFuelState::HalfFull;
-	}
-	*/
 	if (GetRoundsLeft() <= 0)
 	{
 		FiringState = EFiringState::OutOfAmmo;
@@ -64,16 +50,6 @@ EFiringState UTankAimingComponent::GetFiringState() const
 int32 UTankAimingComponent::GetRoundsLeft() const
 {
 	return AmmoCount;
-}
-
-EFuelState UTankAimingComponent::GetFuelState() const
-{
-	return FuelState;
-}
-
-int32 UTankAimingComponent::GetFuelLeft() const
-{
-	return Fuel->GetFuelAmount();
 }
 
 void UTankAimingComponent::Initialize(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet, UTankFuelComponent* TankFuelToSet)
@@ -146,7 +122,7 @@ void UTankAimingComponent::Fire()
 
 void UTankAimingComponent::ThrowFlame()
 {
-	if (FuelState == EFuelState::Full || FuelState == EFuelState::HalfFull)
+	if (Fuel->GetFuelState() == EFuelState::Full || Fuel->GetFuelState() == EFuelState::HalfFull)
 	{
 		if (!ensure(Barrel)) { return; }
 		if (!ensure(FlameThrowerBlueprint)) { return; }
@@ -157,7 +133,6 @@ void UTankAimingComponent::ThrowFlame()
 		auto FlameThrower = GetWorld()->SpawnActor<AFlameThrower>(FlameThrowerBlueprint, FlameThrowerLocation, FlameThrowerRotation);
 
 		FlameThrower->FireFlame(FlameDistance);
-		// TODO New Fuel amount to set
 		int32 FuelToSet = Fuel->GetFuelAmount() - 1;
 		Fuel->SetFuelAmount(FuelToSet);
 	}

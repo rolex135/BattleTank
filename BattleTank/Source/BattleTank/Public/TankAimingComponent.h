@@ -16,15 +16,6 @@ enum class EFiringState : uint8
 	OutOfAmmo
 };
 
-// Enum for fuel state
-UENUM()
-enum class EFuelState : uint8
-{
-	Full,
-	HalfFull,
-	Empty
-};
-
 //Forward declaration
 class UTankBarrel;
 class UTankTurret;
@@ -49,23 +40,16 @@ public:
 	int32 GetRoundsLeft() const;
 
 	UFUNCTION(BlueprintCallable, Category = "Firing")
-	int32 GetFuelLeft() const;
-
-	UFUNCTION(BlueprintCallable, Category = "Firing")
 	void ThrowFlame();
 
 	void AimAt(FVector HitLocation);
 
 	EFiringState GetFiringState() const;
 
-	EFuelState GetFuelState() const;
-
+	
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
 	EFiringState FiringState = EFiringState::Reloading;
-
-	UPROPERTY(BlueprintReadOnly, Category = "State")
-	EFuelState FuelState = EFuelState::Full;
 
 private:
 	UTankAimingComponent();
