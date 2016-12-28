@@ -44,7 +44,7 @@ private:
 
 	UTankTrack* RightTrack = nullptr;
 
-	UTankFuelComponent* Fuel = nullptr;
+	UTankFuelComponent* FuelComponent = nullptr;
 
 	FVector TankPosition; //Initialized in beginplay
 

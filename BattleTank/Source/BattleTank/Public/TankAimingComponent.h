@@ -58,7 +58,7 @@ private:
 
 	UTankTurret* Turret = nullptr;
 
-	UTankFuelComponent* Fuel = nullptr;
+	UTankFuelComponent* FuelComponent = nullptr;
 
 	bool bHaveAimSolution;
 

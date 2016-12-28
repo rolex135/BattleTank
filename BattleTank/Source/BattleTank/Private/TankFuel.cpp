@@ -4,8 +4,8 @@
 #include "TankFuel.h"
 
 
-UTankFuel::UTankFuel()
+void UTankFuel::BeginPlay()
 {
-	PrimaryComponentTick.bCanEverTick = false;
+	Super::BeginPlay();
+	CurrentFuel = StartingFuel;
 }
-

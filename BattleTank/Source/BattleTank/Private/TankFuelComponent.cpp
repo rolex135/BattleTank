@@ -2,6 +2,7 @@
 
 #include "BattleTank.h"
 #include "TankFuelComponent.h"
+#include "TankFuel.h"
 
 
 // Sets default values for this component's properties
@@ -10,21 +11,25 @@ UTankFuelComponent::UTankFuelComponent()
 	PrimaryComponentTick.bCanEverTick = true;
 }
 
-
-// Called when the game starts
-void UTankFuelComponent::BeginPlay()
-{
-	Super::BeginPlay();
-	CurrentFuel = StartingFuel;	
-}
-
 void UTankFuelComponent::Initialize(UTankFuel* FuelToSet)
 {
 	Fuel = FuelToSet;
 }
 
+EFuelState UTankFuelComponent::GetFuelState() const
+{
+	return FuelState;
+}
+
+void UTankFuelComponent::SetFuelAmount(int32 FuelAmount)
+{
+	if (!ensure(Fuel)) { return; }
+	Fuel->CurrentFuel = FuelAmount;
+}
+
 void UTankFuelComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)
 {
+	if (!ensure(Fuel)) { return; }
 	if (GetFuelAmount() <= 0)
 	{
 		FuelState = EFuelState::Empty;
@@ -41,16 +46,6 @@ void UTankFuelComponent::TickComponent(float DeltaTime, enum ELevelTick TickType
 
 int32 UTankFuelComponent::GetFuelAmount() const
 {
-	return CurrentFuel;
-}
-
-EFuelState UTankFuelComponent::GetFuelState() const
-{
-	return FuelState;
-}
-
-void UTankFuelComponent::SetFuelAmount(int32 FuelAmount)
-{
-	CurrentFuel = FuelAmount;
+	return Fuel->CurrentFuel;
 }
 

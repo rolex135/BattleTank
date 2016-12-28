@@ -15,7 +15,7 @@ void UTankMovementComponent::Initialize(UTankTrack* LeftTrackToSet, UTankTrack* 
 {
 	LeftTrack = LeftTrackToSet;
 	RightTrack = RightTrackToSet;
-	Fuel = FuelToSet;
+	FuelComponent = FuelToSet;
 }
 
 void UTankMovementComponent::RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed)
@@ -31,7 +31,7 @@ void UTankMovementComponent::RequestDirectMove(const FVector& MoveVelocity, bool
 
 void UTankMovementComponent::IntendMoveForward(float Throw)
 {
-	if (!ensure(LeftTrack && RightTrack && Fuel)) { return; }
+	if (!ensure(LeftTrack && RightTrack && FuelComponent)) { return; }
 	LeftTrack->SetThrottle(Throw);
 	RightTrack->SetThrottle(Throw);
 }
@@ -62,8 +62,8 @@ void UTankMovementComponent::TankMoving()
 	auto CurrentPositionOfTank = GetActorLocation();
 	if (!CurrentPositionOfTank.Equals(TankPosition, 1.f))
 	{
-		int32 FuelToSet = Fuel->GetFuelAmount() - 1;
-		Fuel->SetFuelAmount(FuelToSet);
+		int32 FuelToSet = FuelComponent->GetFuelAmount() - 1;
+		FuelComponent->SetFuelAmount(FuelToSet);
 		TankPosition = GetActorLocation();
 	}
 }

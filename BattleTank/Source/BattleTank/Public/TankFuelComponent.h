@@ -22,30 +22,22 @@ class BATTLETANK_API UTankFuelComponent : public UActorComponent
 	GENERATED_BODY()
 
 public:	
-	UTankFuelComponent();
+	UFUNCTION(BlueprintCallable, Category = "Setup")
+	void Initialize(UTankFuel* FuelToSet);
 
 	UFUNCTION(BlueprintCallable, Category = "Fuel")
 	int32 GetFuelAmount() const;
 
-	UFUNCTION(BlueprintCallable, Category = "Setup")
-	void Initialize(UTankFuel* FuelToSet);
-
-	virtual void BeginPlay() override;
+	EFuelState GetFuelState() const;
 
 	void SetFuelAmount(int32 FuelAmount);
-
-	EFuelState GetFuelState() const;
 
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
 	EFuelState FuelState = EFuelState::Full;
 
 private:
-	UPROPERTY(EditDefaultsOnly, Category = "Setup")
-	int32 StartingFuel = 2000;
-
-	UPROPERTY(VisibleAnywhere, Category = "Fuel")
-	int32 CurrentFuel; // Initialized in begin play
+	UTankFuelComponent();
 
 	UTankFuel* Fuel = nullptr;
 	

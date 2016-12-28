@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright MKProductions
 
 #include "BattleTank.h"
 #include "TankBarrel.h"
@@ -56,7 +56,7 @@ void UTankAimingComponent::Initialize(UTankBarrel* BarrelToSet, UTankTurret* Tur
 {
 	Barrel = BarrelToSet;
 	Turret = TurretToSet;
-	Fuel = TankFuelToSet;
+	FuelComponent = TankFuelToSet;
 }
 
 void UTankAimingComponent::AimAt(FVector HitLocation)
@@ -122,19 +122,19 @@ void UTankAimingComponent::Fire()
 
 void UTankAimingComponent::ThrowFlame()
 {
-	if (Fuel->GetFuelState() == EFuelState::Full || Fuel->GetFuelState() == EFuelState::HalfFull)
+	if (FuelComponent->GetFuelState() == EFuelState::Full || FuelComponent->GetFuelState() == EFuelState::HalfFull)
 	{
 		if (!ensure(Barrel)) { return; }
 		if (!ensure(FlameThrowerBlueprint)) { return; }
-		if (!ensure(Fuel)) { return; }
+		if (!ensure(FuelComponent)) { return; }
 
 		auto FlameThrowerLocation = Barrel->GetSocketLocation(FName("FlameThrow"));
 		auto FlameThrowerRotation = Barrel->GetSocketRotation(FName("FlameThrow"));
 		auto FlameThrower = GetWorld()->SpawnActor<AFlameThrower>(FlameThrowerBlueprint, FlameThrowerLocation, FlameThrowerRotation);
 
 		FlameThrower->FireFlame(FlameDistance);
-		int32 FuelToSet = Fuel->GetFuelAmount() - 1;
-		Fuel->SetFuelAmount(FuelToSet);
+		int32 FuelToSet = FuelComponent->GetFuelAmount() - 1;
+		FuelComponent->SetFuelAmount(FuelToSet);
 	}
 }
 
