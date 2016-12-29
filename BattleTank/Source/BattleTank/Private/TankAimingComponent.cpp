@@ -6,7 +6,6 @@
 #include "Projectile.h"
 #include "FlameThrower.h"
 #include "TankAimingComponent.h"
-#include "TankFuelComponent.h"
 
 
 // Sets default values for this component's properties
@@ -52,11 +51,10 @@ int32 UTankAimingComponent::GetRoundsLeft() const
 	return AmmoCount;
 }
 
-void UTankAimingComponent::Initialize(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet, UTankFuelComponent* TankFuelToSet)
+void UTankAimingComponent::Initialize(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet)
 {
 	Barrel = BarrelToSet;
 	Turret = TurretToSet;
-	FuelComponent = TankFuelToSet;
 }
 
 void UTankAimingComponent::AimAt(FVector HitLocation)
@@ -122,20 +120,15 @@ void UTankAimingComponent::Fire()
 
 void UTankAimingComponent::ThrowFlame()
 {
-	if (FuelComponent->GetFuelState() == EFuelState::Full || FuelComponent->GetFuelState() == EFuelState::HalfFull)
-	{
-		if (!ensure(Barrel)) { return; }
-		if (!ensure(FlameThrowerBlueprint)) { return; }
-		if (!ensure(FuelComponent)) { return; }
+	//TODO make sure that when fuel goes out you cant trigger this
+	if (!ensure(Barrel)) { return; }
+	if (!ensure(FlameThrowerBlueprint)) { return; }
 
-		auto FlameThrowerLocation = Barrel->GetSocketLocation(FName("FlameThrow"));
-		auto FlameThrowerRotation = Barrel->GetSocketRotation(FName("FlameThrow"));
-		auto FlameThrower = GetWorld()->SpawnActor<AFlameThrower>(FlameThrowerBlueprint, FlameThrowerLocation, FlameThrowerRotation);
+	auto FlameThrowerLocation = Barrel->GetSocketLocation(FName("FlameThrow"));
+	auto FlameThrowerRotation = Barrel->GetSocketRotation(FName("FlameThrow"));
+	auto FlameThrower = GetWorld()->SpawnActor<AFlameThrower>(FlameThrowerBlueprint, FlameThrowerLocation, FlameThrowerRotation);
 
-		FlameThrower->FireFlame(FlameDistance);
-		int32 FuelToSet = FuelComponent->GetFuelAmount() - 1;
-		FuelComponent->SetFuelAmount(FuelToSet);
-	}
+	FlameThrower->FireFlame(FlameDistance);
 }
 
 bool UTankAimingComponent::IsBarrelMoving()

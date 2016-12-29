@@ -18,7 +18,7 @@ class BATTLETANK_API UTankMovementComponent : public UNavMovementComponent
 public:
 
 	UFUNCTION(BlueprintCallable, Category = "Setup")
-	void Initialize(UTankTrack* LeftTrackToSet, UTankTrack* RightTrackToSet, UTankFuelComponent* FuelToSet);
+	void Initialize(UTankTrack* LeftTrackToSet, UTankTrack* RightTrackToSet);
 
 	UFUNCTION(BlueprintCallable, Category = "Movement")
 	void IntendMoveForward(float Throw);
@@ -32,9 +32,6 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Movement")
 	void IntendMoveBackward(float Throw);
 
-	UFUNCTION(BlueprintCallable, Category = "Movement")
-	void TankMoving();
-
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
@@ -44,9 +41,7 @@ private:
 
 	UTankTrack* RightTrack = nullptr;
 
-	UTankFuelComponent* FuelComponent = nullptr;
-
-	FVector TankPosition; //Initialized in beginplay
+	UTankFuelComponent* Fuel = nullptr;
 
 	// Called from the path finding logic by the AI controllers
 	virtual void RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed) override;

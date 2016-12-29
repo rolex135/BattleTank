@@ -4,7 +4,6 @@
 #include "TankFuelComponent.h"
 #include "TankFuel.h"
 
-
 // Sets default values for this component's properties
 UTankFuelComponent::UTankFuelComponent()
 {
@@ -16,6 +15,11 @@ void UTankFuelComponent::Initialize(UTankFuel* FuelToSet)
 	Fuel = FuelToSet;
 }
 
+void UTankFuelComponent::BeginPlay()
+{
+	Super::BeginPlay();
+}
+
 EFuelState UTankFuelComponent::GetFuelState() const
 {
 	return FuelState;
@@ -23,13 +27,15 @@ EFuelState UTankFuelComponent::GetFuelState() const
 
 void UTankFuelComponent::SetFuelAmount(int32 FuelAmount)
 {
-	if (!ensure(Fuel)) { return; }
-	Fuel->CurrentFuel = FuelAmount;
+	FuelCount = FuelAmount;
 }
 
 void UTankFuelComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)
 {
-	if (!ensure(Fuel)) { return; }
+	TankMovingBurnFuel();
+
+	TankFlameThrowerBurnFuel();
+
 	if (GetFuelAmount() <= 0)
 	{
 		FuelState = EFuelState::Empty;
@@ -46,6 +52,25 @@ void UTankFuelComponent::TickComponent(float DeltaTime, enum ELevelTick TickType
 
 int32 UTankFuelComponent::GetFuelAmount() const
 {
-	return Fuel->CurrentFuel;
+	return FuelCount;
+}
+
+void UTankFuelComponent::TankMovingBurnFuel()
+{
+	if (!ensure(Fuel)) { return; }
+	auto CurrentPositionOfTank = Fuel->GetComponentLocation();
+	if (!CurrentPositionOfTank.Equals(TankPosition, 1.f))
+	{
+		TankPosition = Fuel->GetComponentLocation();
+		SetFuelAmount(GetFuelAmount() - 2);
+	}
+}
+
+void UTankFuelComponent::TankFlameThrowerBurnFuel()
+{
+	if (IsFlameThrowerActive)
+	{
+		SetFuelAmount(GetFuelAmount() - 1);
+	}
 }
 

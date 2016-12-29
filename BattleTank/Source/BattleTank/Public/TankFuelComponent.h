@@ -16,7 +16,7 @@ enum class EFuelState : uint8
 
 class UTankFuel;
 
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class BATTLETANK_API UTankFuelComponent : public UActorComponent
 {
 	GENERATED_BODY()
@@ -28,19 +28,32 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Fuel")
 	int32 GetFuelAmount() const;
 
+	UPROPERTY(BlueprintReadWrite, Category = "State")
+	bool IsFlameThrowerActive = false;
+
 	EFuelState GetFuelState() const;
 
 	void SetFuelAmount(int32 FuelAmount);
 
+	void TankMovingBurnFuel();
+
+	void TankFlameThrowerBurnFuel();
+
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
-	EFuelState FuelState = EFuelState::Full;
+	EFuelState FuelState = EFuelState::HalfFull;
 
 private:
 	UTankFuelComponent();
 
-	UTankFuel* Fuel = nullptr;
-	
-	virtual void UTankFuelComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
+	UTankFuel* Fuel;
 
+	FVector TankPosition; //Initialized in begin play
+
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	int32 FuelCount = 2000;
+
+	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
+
+	virtual void BeginPlay() override;
 };
