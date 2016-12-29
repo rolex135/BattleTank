@@ -19,6 +19,8 @@ public:
 
 	void SetFuelAmount(int32 FuelAmount);
 
+	bool IsThereFuel();
+
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	int32 StartingFuel = 2000;

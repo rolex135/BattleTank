@@ -6,6 +6,7 @@
 #include "Projectile.h"
 #include "FlameThrower.h"
 #include "TankAimingComponent.h"
+#include "TankFuel.h"
 
 
 // Sets default values for this component's properties
@@ -22,6 +23,10 @@ void UTankAimingComponent::BeginPlay()
 
 void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)
 {
+	if (!Fuel) { return; }
+
+	Fuel->IsThereFuel();
+
 	if (GetRoundsLeft() <= 0)
 	{
 		FiringState = EFiringState::OutOfAmmo;
@@ -51,10 +56,11 @@ int32 UTankAimingComponent::GetRoundsLeft() const
 	return AmmoCount;
 }
 
-void UTankAimingComponent::Initialize(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet)
+void UTankAimingComponent::Initialize(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet, UTankFuel* FuelToSet)
 {
 	Barrel = BarrelToSet;
 	Turret = TurretToSet;
+	Fuel = FuelToSet;
 }
 
 void UTankAimingComponent::AimAt(FVector HitLocation)
@@ -120,15 +126,18 @@ void UTankAimingComponent::Fire()
 
 void UTankAimingComponent::ThrowFlame()
 {
-	//TODO make sure that when fuel goes out you cant trigger this
-	if (!ensure(Barrel)) { return; }
-	if (!ensure(FlameThrowerBlueprint)) { return; }
+	if (!Barrel) { return; }
+	if (!FlameThrowerBlueprint) { return; }
+	if (!Fuel) { return; }
 
-	auto FlameThrowerLocation = Barrel->GetSocketLocation(FName("FlameThrow"));
-	auto FlameThrowerRotation = Barrel->GetSocketRotation(FName("FlameThrow"));
-	auto FlameThrower = GetWorld()->SpawnActor<AFlameThrower>(FlameThrowerBlueprint, FlameThrowerLocation, FlameThrowerRotation);
+	if (Fuel->IsThereFuel())//TODO Fix bug where it still shoot after hitting 0
+	{
+		auto FlameThrowerLocation = Barrel->GetSocketLocation(FName("FlameThrow"));
+		auto FlameThrowerRotation = Barrel->GetSocketRotation(FName("FlameThrow"));
+		auto FlameThrower = GetWorld()->SpawnActor<AFlameThrower>(FlameThrowerBlueprint, FlameThrowerLocation, FlameThrowerRotation);
 
-	FlameThrower->FireFlame(FlameDistance);
+		FlameThrower->FireFlame(FlameDistance);
+	}
 }
 
 bool UTankAimingComponent::IsBarrelMoving()

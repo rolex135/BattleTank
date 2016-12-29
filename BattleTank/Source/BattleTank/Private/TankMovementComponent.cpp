@@ -2,7 +2,7 @@
 
 #include "BattleTank.h"
 #include "TankTrack.h"
-#include "TankFuelComponent.h"
+#include "TankFuel.h"
 #include "TankMovementComponent.h"
 
 void UTankMovementComponent::BeginPlay()
@@ -10,10 +10,11 @@ void UTankMovementComponent::BeginPlay()
 	Super::BeginPlay();
 }
 
-void UTankMovementComponent::Initialize(UTankTrack* LeftTrackToSet, UTankTrack* RightTrackToSet)
+void UTankMovementComponent::Initialize(UTankTrack* LeftTrackToSet, UTankTrack* RightTrackToSet, UTankFuel* FuelToSet)
 {
 	LeftTrack = LeftTrackToSet;
 	RightTrack = RightTrackToSet;
+	Fuel = FuelToSet;
 }
 
 void UTankMovementComponent::RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed)
@@ -29,28 +30,40 @@ void UTankMovementComponent::RequestDirectMove(const FVector& MoveVelocity, bool
 
 void UTankMovementComponent::IntendMoveForward(float Throw)
 {
-	if (!ensure(LeftTrack && RightTrack)) { return; }
-	LeftTrack->SetThrottle(Throw);
-	RightTrack->SetThrottle(Throw);
+	if (!(LeftTrack && RightTrack)) { return; }
+	if (Fuel->IsThereFuel())
+	{
+		LeftTrack->SetThrottle(Throw);
+		RightTrack->SetThrottle(Throw);
+	}
 }
 
 void UTankMovementComponent::IntendTurnRight(float Throw)
 {
-	if (!ensure(LeftTrack && RightTrack)) { return; }
-	LeftTrack->SetThrottle(Throw);
-	RightTrack->SetThrottle(-Throw);
+	if (!(LeftTrack && RightTrack)) { return; }
+	if (Fuel->IsThereFuel())
+	{
+		LeftTrack->SetThrottle(Throw);
+		RightTrack->SetThrottle(-Throw);
+	}
 }
 
 void UTankMovementComponent::IntendTurnLeft(float Throw)
 {
-	if (!ensure(LeftTrack && RightTrack)) { return; }
-	LeftTrack->SetThrottle(-Throw);
-	RightTrack->SetThrottle(Throw);
+	if (!(LeftTrack && RightTrack)) { return; }
+	if (Fuel->IsThereFuel())
+	{
+		LeftTrack->SetThrottle(-Throw);
+		RightTrack->SetThrottle(Throw);
+	}
 }
 
 void UTankMovementComponent::IntendMoveBackward(float Throw)
 {
-	if (!ensure(LeftTrack && RightTrack)) { return; }
-	LeftTrack->SetThrottle(-Throw);
-	RightTrack->SetThrottle(-Throw);
+	if (!(LeftTrack && RightTrack)) { return; }
+	if (Fuel->IsThereFuel())
+	{
+		LeftTrack->SetThrottle(-Throw);
+		RightTrack->SetThrottle(-Throw);
+	}
 }

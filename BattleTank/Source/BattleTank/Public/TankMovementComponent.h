@@ -5,7 +5,7 @@
 #include "TankMovementComponent.generated.h"
 
 class UTankTrack;
-class UTankFuelComponent;
+class UTankFuel;
 
 /**
  * Responsible for driving the tank tracks
@@ -18,7 +18,7 @@ class BATTLETANK_API UTankMovementComponent : public UNavMovementComponent
 public:
 
 	UFUNCTION(BlueprintCallable, Category = "Setup")
-	void Initialize(UTankTrack* LeftTrackToSet, UTankTrack* RightTrackToSet);
+	void Initialize(UTankTrack* LeftTrackToSet, UTankTrack* RightTrackToSet, UTankFuel* FuelToSet);
 
 	UFUNCTION(BlueprintCallable, Category = "Movement")
 	void IntendMoveForward(float Throw);
@@ -41,7 +41,7 @@ private:
 
 	UTankTrack* RightTrack = nullptr;
 
-	UTankFuelComponent* Fuel = nullptr;
+	UTankFuel* Fuel = nullptr;
 
 	// Called from the path finding logic by the AI controllers
 	virtual void RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed) override;

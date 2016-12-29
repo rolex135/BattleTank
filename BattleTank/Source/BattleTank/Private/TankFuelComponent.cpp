@@ -54,7 +54,7 @@ void UTankFuelComponent::TankMovingBurnFuel()
 void UTankFuelComponent::TankFlameThrowerBurnFuel()
 {
 	if (!ensure(Fuel)) { return; }
-	if (IsFlameThrowerActive)
+	if (IsFlameThrowerActive && Fuel->IsThereFuel())
 	{
 		Fuel->SetFuelAmount(Fuel->GetFuelAmount() - 1);
 	}
