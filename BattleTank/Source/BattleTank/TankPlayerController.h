@@ -8,6 +8,7 @@
 //Forward declarations
 class UTankAimingComponent;
 class UTankFuelComponent;
+class UTankFuel;
 
 /**
  * Responsible for helping the player aim.
@@ -23,6 +24,9 @@ protected:
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
 	void FoundFuelComponent(UTankFuelComponent* FuelCompRef);
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
+	void FoundFuel(UTankFuel* FuelRef);
 
 private:
 	UPROPERTY(EditDefaultsOnly)

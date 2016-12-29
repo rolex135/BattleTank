@@ -25,15 +25,10 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Setup")
 	void Initialize(UTankFuel* FuelToSet);
 
-	UFUNCTION(BlueprintCallable, Category = "Fuel")
-	int32 GetFuelAmount() const;
-
 	UPROPERTY(BlueprintReadWrite, Category = "State")
 	bool IsFlameThrowerActive = false;
 
 	EFuelState GetFuelState() const;
-
-	void SetFuelAmount(int32 FuelAmount);
 
 	void TankMovingBurnFuel();
 
@@ -48,12 +43,10 @@ private:
 
 	UTankFuel* Fuel;
 
-	FVector TankPosition; //Initialized in begin play
+	FVector TankPosition;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Setup")
-	int32 FuelCount = 2000;
+	//UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	//int32 FuelCount = 2000;
 
 	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
-
-	virtual void BeginPlay() override;
 };

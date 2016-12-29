@@ -15,19 +15,9 @@ void UTankFuelComponent::Initialize(UTankFuel* FuelToSet)
 	Fuel = FuelToSet;
 }
 
-void UTankFuelComponent::BeginPlay()
-{
-	Super::BeginPlay();
-}
-
 EFuelState UTankFuelComponent::GetFuelState() const
 {
 	return FuelState;
-}
-
-void UTankFuelComponent::SetFuelAmount(int32 FuelAmount)
-{
-	FuelCount = FuelAmount;
 }
 
 void UTankFuelComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)
@@ -35,12 +25,12 @@ void UTankFuelComponent::TickComponent(float DeltaTime, enum ELevelTick TickType
 	TankMovingBurnFuel();
 
 	TankFlameThrowerBurnFuel();
-
-	if (GetFuelAmount() <= 0)
+	if (!Fuel) { return; }
+	if (Fuel->GetFuelAmount() <= 0)
 	{
 		FuelState = EFuelState::Empty;
 	}
-	else if (GetFuelAmount() >= 200)
+	else if (Fuel->GetFuelAmount() >= 200)
 	{
 		FuelState = EFuelState::Full;
 	}
@@ -50,11 +40,6 @@ void UTankFuelComponent::TickComponent(float DeltaTime, enum ELevelTick TickType
 	}
 }
 
-int32 UTankFuelComponent::GetFuelAmount() const
-{
-	return FuelCount;
-}
-
 void UTankFuelComponent::TankMovingBurnFuel()
 {
 	if (!ensure(Fuel)) { return; }
@@ -62,15 +47,16 @@ void UTankFuelComponent::TankMovingBurnFuel()
 	if (!CurrentPositionOfTank.Equals(TankPosition, 1.f))
 	{
 		TankPosition = Fuel->GetComponentLocation();
-		SetFuelAmount(GetFuelAmount() - 2);
+		Fuel->SetFuelAmount(Fuel->GetFuelAmount() - 2);
 	}
 }
 
 void UTankFuelComponent::TankFlameThrowerBurnFuel()
 {
+	if (!ensure(Fuel)) { return; }
 	if (IsFlameThrowerActive)
 	{
-		SetFuelAmount(GetFuelAmount() - 1);
+		Fuel->SetFuelAmount(Fuel->GetFuelAmount() - 1);
 	}
 }
 
