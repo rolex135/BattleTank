@@ -12,7 +12,5 @@ UCLASS(meta = (BlueprintSpawnableComponent))
 class BATTLETANK_API UTankSuspension : public UStaticMeshComponent
 {
 	GENERATED_BODY()
-	
-public:
-	void DriveTrack(float CurrentThrottle, float TrackMaxDrivingForce);
+
 };
