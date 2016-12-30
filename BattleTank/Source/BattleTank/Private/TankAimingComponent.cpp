@@ -130,7 +130,7 @@ void UTankAimingComponent::ThrowFlame()
 	if (!FlameThrowerBlueprint) { return; }
 	if (!Fuel) { return; }
 
-	if (Fuel->IsThereFuel())//TODO Fix bug where it still shoot after hitting 0
+	if (Fuel->IsThereFuel())
 	{
 		auto FlameThrowerLocation = Barrel->GetSocketLocation(FName("FlameThrow"));
 		auto FlameThrowerRotation = Barrel->GetSocketRotation(FName("FlameThrow"));
