@@ -65,7 +65,7 @@ void UTankAimingComponent::Initialize(UTankBarrel* BarrelToSet, UTankTurret* Tur
 
 void UTankAimingComponent::AimAt(FVector HitLocation)
 {
-	if (!ensure(Barrel)) { return; }
+	if (!Barrel) { return; }
 	FVector OutLaunchVelocity;
 	FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile"));
 	bool bHaveAimSolution = UGameplayStatics::SuggestProjectileVelocity(
@@ -89,7 +89,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation)
 
 void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 {
-	if (!ensure(Barrel) || !ensure(Turret)) { return; }
+	if (!Barrel || !Turret) { return; }
 	//Work out difference between current barrel rotation and AimDirection
 	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
 	auto AimAsRotator = AimDirection.Rotation();
@@ -111,8 +111,8 @@ void UTankAimingComponent::Fire()
 {
 	if(FiringState == EFiringState::Locked || FiringState == EFiringState::Aiming)
 	{
-		if (!ensure(Barrel)) { return; }
-		if (!ensure(ProjectileBlueprint)) { return; }
+		if (!Barrel) { return; }
+		if (!ProjectileBlueprint) { return; }
 
 		auto ProjectileLocation = Barrel->GetSocketLocation(FName("Projectile"));
 		auto ProjectileRotation = Barrel->GetSocketRotation(FName("Projectile"));
@@ -142,7 +142,7 @@ void UTankAimingComponent::ThrowFlame()
 
 bool UTankAimingComponent::IsBarrelMoving()
 {
-	if (!ensure(Barrel)) { return false; }
+	if (!Barrel) { return false; }
 	FVector BarrelForward = Barrel->GetForwardVector();
 	return !BarrelForward.Equals(AimDirection, 0.01);
 }

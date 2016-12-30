@@ -13,17 +13,17 @@ void ATankPlayerController::BeginPlay()
 	Super::BeginPlay();
 
 	auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
-	if (!ensure(AimingComponent)) { return; }
+	if (!AimingComponent) { return; }
 	
 	FoundAimingComponent(AimingComponent);
 
 	auto FuelComponent = GetPawn()->FindComponentByClass<UTankFuelComponent>();
-	if (!ensure(FuelComponent)) { return; }
+	if (!FuelComponent) { return; }
 
 	FoundFuelComponent(FuelComponent);
 
 	auto Fuel = GetPawn()->FindComponentByClass<UTankFuel>();
-	if (!ensure(Fuel)) { return; }
+	if (!Fuel) { return; }
 
 	FoundFuel(Fuel);
 	
@@ -39,7 +39,7 @@ void ATankPlayerController::AimTowardsCrosshair()
 {
 	if (!GetPawn()) { return; }
 	auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
-	if (!ensure(AimingComponent)) { return; }
+	if (!AimingComponent) { return; }
 
 	FVector HitLocation;//Out parameter
 	bool bGotHitLocation = GetSightRayHitLocation(HitLocation);
@@ -95,7 +95,7 @@ void ATankPlayerController::SetPawn(APawn* InPawn)
 	if (InPawn)
 	{
 		auto PossesedTank = Cast<ATank>(InPawn);
-		if (!ensure(PossesedTank)) { return; }
+		if (!PossesedTank) { return; }
 
 		//Subscribe our local method to the tank's death event
 		PossesedTank->OnDeath.AddUniqueDynamic(this, &ATankPlayerController::OnPossesedTankDeath);

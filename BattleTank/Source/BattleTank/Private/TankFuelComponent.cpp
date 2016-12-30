@@ -42,7 +42,7 @@ void UTankFuelComponent::TickComponent(float DeltaTime, enum ELevelTick TickType
 
 void UTankFuelComponent::TankMovingBurnFuel()
 {
-	if (!ensure(Fuel)) { return; }
+	if (!Fuel) { return; }
 	auto CurrentPositionOfTank = Fuel->GetComponentLocation();
 	if (!CurrentPositionOfTank.Equals(TankPosition, 1.f))
 	{
@@ -53,7 +53,7 @@ void UTankFuelComponent::TankMovingBurnFuel()
 
 void UTankFuelComponent::TankFlameThrowerBurnFuel()
 {
-	if (!ensure(Fuel)) { return; }
+	if (!Fuel) { return; }
 	if (IsFlameThrowerActive && Fuel->IsThereFuel())
 	{
 		Fuel->SetFuelAmount(Fuel->GetFuelAmount() - 1);

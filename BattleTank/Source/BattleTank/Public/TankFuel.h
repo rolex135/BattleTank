@@ -23,7 +23,7 @@ public:
 
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
-	int32 StartingFuel = 2000;
+	int32 StartingFuel = 20000;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	int32 FuelCount;
