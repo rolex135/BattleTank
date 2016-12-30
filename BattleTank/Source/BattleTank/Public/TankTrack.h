@@ -5,6 +5,8 @@
 #include "Components/StaticMeshComponent.h"
 #include "TankTrack.generated.h"
 
+class UTankSuspension;
+
 /**
  * TankTrack is used to sex maximum driving force and to apply forces to the tank.
  */
@@ -14,6 +16,9 @@ class BATTLETANK_API UTankTrack : public UStaticMeshComponent
 	GENERATED_BODY()
 	
 public:
+	UFUNCTION(BlueprintCallable, Category = "Setup")
+	void Initialize(UTankSuspension* LeftSuspensionToSet, UTankSuspension* MiddleSuspensionToSet, UTankSuspension* RightSuspensionToSet);
+
 	UFUNCTION(BlueprintCallable, Category = "Input")
 	void SetThrottle(float Throttle);
 	
@@ -24,6 +29,12 @@ public:
 private:
 	UTankTrack();
 
+	UTankSuspension* LeftSuspension = nullptr;
+
+	UTankSuspension* MiddleSuspension = nullptr;
+
+	UTankSuspension* RightSuspension = nullptr;
+
 	UFUNCTION(BlueprintCallable, Category = "Input")
 	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent,
 			FVector NormalImpulse, const FHitResult& Hit);
@@ -32,7 +43,7 @@ private:
 
 	void ApplySidewaysForce();
 
-	void DriveTrack();
+	void DriveAllTracks();
 
 	float CurrentThrottle = 0;
 };

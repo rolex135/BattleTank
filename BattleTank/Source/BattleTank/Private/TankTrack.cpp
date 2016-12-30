@@ -2,6 +2,7 @@
 
 #include "BattleTank.h"
 #include "TankTrack.h"
+#include "TankSuspension.h"
 
 
 UTankTrack::UTankTrack()
@@ -14,6 +15,14 @@ void UTankTrack::BeginPlay()
 	OnComponentHit.AddDynamic(this, &UTankTrack::OnHit);
 }
 
+void UTankTrack::Initialize(UTankSuspension* LeftSuspensionToSet, UTankSuspension* MiddleSuspensionToSet, UTankSuspension* RightSuspensionToSet)
+{
+	LeftSuspension = LeftSuspensionToSet;
+	MiddleSuspension = MiddleSuspensionToSet;
+	RightSuspension = RightSuspensionToSet;
+}
+
+
 void UTankTrack::SetThrottle(float Throttle)
 {
 	CurrentThrottle = FMath::Clamp<float>(CurrentThrottle + Throttle, -1, 1);
@@ -22,7 +31,7 @@ void UTankTrack::SetThrottle(float Throttle)
 void UTankTrack::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent,
 	FVector NormalImpulse, const FHitResult& Hit)
 {
-	DriveTrack();
+	DriveAllTracks();
 	ApplySidewaysForce();
 	CurrentThrottle = 0;
 }
@@ -40,10 +49,9 @@ void UTankTrack::ApplySidewaysForce()
 	TankRoot->AddForce(CorrectionForce);
 }
 
-void UTankTrack::DriveTrack()
+void UTankTrack::DriveAllTracks()
 {
-	FVector ForceApplied = GetForwardVector() * CurrentThrottle * TrackMaxDrivingForce;
-	FVector ForceLocation = GetComponentLocation();
-	auto TankRoot = Cast<UPrimitiveComponent>(GetOwner()->GetRootComponent());
-	TankRoot->AddForceAtLocation(ForceApplied, ForceLocation);
+	LeftSuspension->DriveTrack(CurrentThrottle, TrackMaxDrivingForce);
+	//MiddleSuspension->DriveTrack(CurrentThrottle, TrackMaxDrivingForce);
+	RightSuspension->DriveTrack(CurrentThrottle, TrackMaxDrivingForce);
 }
