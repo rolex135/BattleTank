@@ -5,6 +5,15 @@
 #include "Mortar.h"
 #include "TankAimingComponent.h"
 
+AMortarAIController::AMortarAIController()
+{
+	FlamesOnDying = CreateDefaultSubobject<UParticleSystemComponent>(FName("Mortar Mesh"));
+	FlamesOnDying->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
+	FlamesOnDying->bAutoActivate = false;
+
+	//TODO make flames work
+}
+
 void AMortarAIController::BeginPlay()
 {
 	Super::BeginPlay();
