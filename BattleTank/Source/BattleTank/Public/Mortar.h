@@ -3,20 +3,19 @@
 #pragma once
 
 #include "GameFramework/Pawn.h"
-#include "Tank.generated.h"
+#include "Mortar.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FTankDelegate);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FMortarDelegate);
 
 UCLASS()
-class BATTLETANK_API ATank : public APawn
+class BATTLETANK_API AMortar : public APawn
 {
 	GENERATED_BODY()
 
-
 public:
-	FTankDelegate OnDeath;
-	//called by the engine when actor damage is dealt
-	virtual float TakeDamage(float DamageAmount,struct FDamageEvent const & DamageEvent,
+	FMortarDelegate OnDeath;
+
+	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const & DamageEvent,
 		class AController * EventInstigator, AActor * DamageCauser) override;
 
 	//returns current health as a percentage of starting health, between 0 and 1
@@ -24,13 +23,14 @@ public:
 	float GetHealthPercent() const;
 
 private:
-	ATank();
+	AMortar();
 
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
-	int32 StartingHealth = 100;
+	int32 StartingHealth = 50;
 
 	UPROPERTY(VisibleAnywhere, Category = "Health")
 	int32 CurrentHealth; // Initialized in begin play
-	
+
 	virtual void BeginPlay() override;
+		
 };
