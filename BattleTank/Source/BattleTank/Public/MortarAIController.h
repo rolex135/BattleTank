@@ -14,11 +14,6 @@ class BATTLETANK_API AMortarAIController : public AAIController
 	GENERATED_BODY()
 
 private:
-	AMortarAIController();
-
-	UPROPERTY(VisibleAnywhere, Category = "Components")
-	UParticleSystemComponent* FlamesOnDying = nullptr;
-
 	virtual void BeginPlay() override;
 
 	virtual void SetPawn(APawn* InPawn) override;
