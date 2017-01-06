@@ -15,12 +15,6 @@ public:
 	// Sets default values for this component's properties
 	UItemSpawnComponent();
 
-	// Called when the game starts
-	virtual void BeginPlay() override;
-	
-	// Called every frame
-	virtual void TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction ) override;
-
-		
-	
+	UFUNCTION(BlueprintCallable, Category = "Setup")
+	void SpawnItem(FVector LocationToSpawn);
 };

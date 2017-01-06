@@ -2,34 +2,19 @@
 
 #include "BattleTank.h"
 #include "ItemSpawnComponent.h"
+#include "ItemFuel.h"
 
 
-// Sets default values for this component's properties
 UItemSpawnComponent::UItemSpawnComponent()
 {
-	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
-	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = true;
 
-	// ...
+	PrimaryComponentTick.bCanEverTick = false;
 }
 
-
-// Called when the game starts
-void UItemSpawnComponent::BeginPlay()
+void UItemSpawnComponent::SpawnItem(FVector LocationToSpawn)
 {
-	Super::BeginPlay();
-
-	// ...
-	
+	FRotator RotationToSpawn(0.f, 0.f, 0.f);
+	FActorSpawnParameters SpawnInfo;
+	SpawnInfo.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+	GetWorld()->SpawnActor<AItemFuel>(LocationToSpawn, RotationToSpawn, SpawnInfo);
 }
-
-
-// Called every frame
-void UItemSpawnComponent::TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction )
-{
-	Super::TickComponent( DeltaTime, TickType, ThisTickFunction );
-
-	// ...
-}
-

@@ -20,6 +20,10 @@ public:
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+private:
+	UPROPERTY(VisibleAnywhere, Category = "Setup")
+	UStaticMeshComponent* CollisionMesh = nullptr;
 	
 	UPROPERTY(VisibleAnywhere, Category = "Setup")
 	int32 FuelAmountToAdd;
