@@ -11,10 +11,11 @@ class BATTLETANK_API UItemSpawnComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
-public:	
-	// Sets default values for this component's properties
+public:
 	UItemSpawnComponent();
 
 	UFUNCTION(BlueprintCallable, Category = "Setup")
 	void SpawnItem(FVector LocationToSpawn);
+
+	void SpawnRandomItemActor(FVector LocationToSpawn);
 };
