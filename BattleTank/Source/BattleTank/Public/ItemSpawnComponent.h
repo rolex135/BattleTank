@@ -15,7 +15,5 @@ public:
 	UItemSpawnComponent();
 
 	UFUNCTION(BlueprintCallable, Category = "Setup")
-	void SpawnItem(FVector LocationToSpawn);
-
 	void SpawnRandomItemActor(FVector LocationToSpawn);
 };

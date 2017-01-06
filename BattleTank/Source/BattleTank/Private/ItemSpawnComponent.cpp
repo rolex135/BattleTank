@@ -12,11 +12,6 @@ UItemSpawnComponent::UItemSpawnComponent()
 	PrimaryComponentTick.bCanEverTick = false;
 }
 
-void UItemSpawnComponent::SpawnItem(FVector LocationToSpawn)
-{
-	SpawnRandomItemActor(LocationToSpawn);
-}
-
 void UItemSpawnComponent::SpawnRandomItemActor(FVector LocationToSpawn)
 {
 	FActorSpawnParameters SpawnInfo;
