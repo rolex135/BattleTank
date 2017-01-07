@@ -2,6 +2,7 @@
 
 #include "BattleTank.h"
 #include "ItemFuel.h"
+#include "TankFuel.h"
 
 
 // Sets default values
@@ -11,7 +12,9 @@ AItemFuel::AItemFuel()
 	PrimaryActorTick.bCanEverTick = false;
 	CollisionMesh = CreateDefaultSubobject<UStaticMeshComponent>(FName("Collision Mesh"));
 	SetRootComponent(CollisionMesh);
-	UStaticMeshComponent* SphereVisual = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("VisualRepresentation"));
+	CollisionMesh->SetNotifyRigidBodyCollision(true);
+
+	SphereVisual = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("VisualRepresentation"));
 	SphereVisual->SetupAttachment(RootComponent);
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> SphereVisualAsset(TEXT("/Game/SpawningItems/FuelMesh"));
 	if (SphereVisualAsset.Succeeded())
@@ -26,6 +29,17 @@ AItemFuel::AItemFuel()
 void AItemFuel::BeginPlay()
 {
 	Super::BeginPlay();
+	CollisionMesh->OnComponentHit.AddDynamic(this, &AItemFuel::OnHit);
 	FuelAmountToAdd = rand() % (MaxFuelToAdd - MinFuelToAdd + 1) + MinFuelToAdd;
+}
+
+void AItemFuel::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent,
+	FVector NormalImpulse, const FHitResult& Hit)
+{
+	UE_LOG(LogTemp, Warning, TEXT("Item Fuel"));
+	UTankFuel Fuel;
+	Fuel.SetFuelAmount(Fuel.GetFuelAmount() + FuelAmountToAdd);
+	CollisionMesh->DestroyComponent();
+	SphereVisual->DestroyComponent();
 }
 

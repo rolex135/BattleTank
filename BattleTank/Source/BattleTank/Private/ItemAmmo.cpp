@@ -11,7 +11,9 @@ AItemAmmo::AItemAmmo()
 	PrimaryActorTick.bCanEverTick = false;
 	CollisionMesh = CreateDefaultSubobject<UStaticMeshComponent>(FName("Collision Mesh"));
 	SetRootComponent(CollisionMesh);
-	UStaticMeshComponent* SphereVisual = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("VisualRepresentation"));
+	CollisionMesh->SetNotifyRigidBodyCollision(true);
+
+	SphereVisual = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("VisualRepresentation"));
 	SphereVisual->SetupAttachment(RootComponent);
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> SphereVisualAsset(TEXT("/Game/SpawningItems/AmmoMesh"));
 	if (SphereVisualAsset.Succeeded())
@@ -27,7 +29,15 @@ AItemAmmo::AItemAmmo()
 void AItemAmmo::BeginPlay()
 {
 	Super::BeginPlay();
+	CollisionMesh->OnComponentHit.AddDynamic(this, &AItemAmmo::OnHit);
 	AmmoAmountToAdd = rand() % (MaxAmmoToAdd - MinAmmoToAdd + 1) + MinAmmoToAdd;
+}
+
+void AItemAmmo::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent,
+	FVector NormalImpulse, const FHitResult& Hit)
+{
+	CollisionMesh->DestroyComponent();
+	SphereVisual->DestroyComponent();
 }
 
 

@@ -8,7 +8,6 @@
 
 UItemSpawnComponent::UItemSpawnComponent()
 {
-
 	PrimaryComponentTick.bCanEverTick = false;
 }
 

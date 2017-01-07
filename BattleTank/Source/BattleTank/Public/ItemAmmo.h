@@ -24,7 +24,14 @@ private:
 	UPROPERTY(VisibleAnywhere, Category = "Setup")
 	UStaticMeshComponent* CollisionMesh = nullptr;
 
+	UPROPERTY(VisibleAnywhere, Category = "Setup")
+	UStaticMeshComponent* SphereVisual = nullptr;
+
 	int32 MaxAmmoToAdd = 10;
 	
 	int32 MinAmmoToAdd = 1;
+
+	UFUNCTION(BlueprintCallable, Category = "Action")
+	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent,
+			FVector NormalImpulse, const FHitResult& Hit);
 };

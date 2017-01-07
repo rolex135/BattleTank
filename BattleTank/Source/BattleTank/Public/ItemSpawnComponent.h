@@ -5,6 +5,9 @@
 #include "Components/ActorComponent.h"
 #include "ItemSpawnComponent.generated.h"
 
+/*
+Responsible for spawning random items
+*/
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class BATTLETANK_API UItemSpawnComponent : public UActorComponent
