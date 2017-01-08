@@ -24,9 +24,6 @@ public:
 private:
 	UPROPERTY(VisibleAnywhere, Category = "Setup")
 	UStaticMeshComponent* CollisionMesh = nullptr;
-
-	UPROPERTY(VisibleAnywhere, Category = "Setup")
-	UStaticMeshComponent* SphereVisual = nullptr;
 	
 	UPROPERTY(VisibleAnywhere, Category = "Setup")
 	int32 FuelAmountToAdd;

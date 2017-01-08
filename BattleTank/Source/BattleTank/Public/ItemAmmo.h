@@ -24,9 +24,6 @@ private:
 	UPROPERTY(VisibleAnywhere, Category = "Setup")
 	UStaticMeshComponent* CollisionMesh = nullptr;
 
-	UPROPERTY(VisibleAnywhere, Category = "Setup")
-	UStaticMeshComponent* SphereVisual = nullptr;
-
 	int32 MaxAmmoToAdd = 10;
 	
 	int32 MinAmmoToAdd = 1;
