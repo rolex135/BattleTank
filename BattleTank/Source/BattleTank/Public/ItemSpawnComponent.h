@@ -5,6 +5,9 @@
 #include "Components/ActorComponent.h"
 #include "ItemSpawnComponent.generated.h"
 
+class AItemFuel;
+class AItemAmmo;
+
 /*
 Responsible for spawning random items
 */
@@ -19,4 +22,11 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Setup")
 	void SpawnRandomItemActor(FVector LocationToSpawn);
+
+private:
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	TSubclassOf<AItemFuel> FuelBlueprint;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	TSubclassOf<AItemAmmo> AmmoBlueprint;
 };

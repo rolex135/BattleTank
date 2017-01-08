@@ -13,6 +13,7 @@ UItemSpawnComponent::UItemSpawnComponent()
 
 void UItemSpawnComponent::SpawnRandomItemActor(FVector LocationToSpawn)
 {
+	if (!FuelBlueprint || !AmmoBlueprint) { return; }
 	FActorSpawnParameters SpawnInfo;
 	SpawnInfo.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 
@@ -20,11 +21,11 @@ void UItemSpawnComponent::SpawnRandomItemActor(FVector LocationToSpawn)
 	int32 RandomActorNumber = rand() % NumberOfActors + 1;
 	if (RandomActorNumber == 1)
 	{
-		GetWorld()->SpawnActor<AItemFuel>(LocationToSpawn, FRotator(0.f, 0.f, 0.f), SpawnInfo);
+		GetWorld()->SpawnActor<AItemFuel>(FuelBlueprint, LocationToSpawn, FRotator(0.f, 0.f, 0.f), SpawnInfo);
 	}
 	else if (RandomActorNumber == 2)
 	{
-		GetWorld()->SpawnActor<AItemAmmo>(LocationToSpawn, FRotator(0.f, 0.f, 0.f), SpawnInfo);
+		GetWorld()->SpawnActor<AItemAmmo>(AmmoBlueprint, LocationToSpawn, FRotator(0.f, 0.f, 0.f), SpawnInfo);
 	}
 	else
 	{
