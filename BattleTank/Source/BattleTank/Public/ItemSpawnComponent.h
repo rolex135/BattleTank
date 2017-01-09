@@ -7,6 +7,7 @@
 
 class AItemFuel;
 class AItemAmmo;
+class UTankFuel;
 
 /*
 Responsible for spawning random items

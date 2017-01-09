@@ -30,7 +30,7 @@ void UTankFuelComponent::TickComponent(float DeltaTime, enum ELevelTick TickType
 	{
 		FuelState = EFuelState::Empty;
 	}
-	else if (Fuel->GetFuelAmount() >= 200)
+	else if (Fuel->GetFuelAmount() >= (Fuel->StartingFuel / 2))
 	{
 		FuelState = EFuelState::Full;
 	}

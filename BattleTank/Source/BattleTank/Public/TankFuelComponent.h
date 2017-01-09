@@ -21,12 +21,12 @@ class BATTLETANK_API UTankFuelComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
-public:	
-	UFUNCTION(BlueprintCallable, Category = "Setup")
-	void Initialize(UTankFuel* FuelToSet);
-
+public:
 	UPROPERTY(BlueprintReadWrite, Category = "State")
 	bool IsFlameThrowerActive = false;
+
+	UFUNCTION(BlueprintCallable, Category = "Setup")
+	void Initialize(UTankFuel* FuelToSet);
 
 	EFuelState GetFuelState() const;
 
@@ -41,12 +41,9 @@ protected:
 private:
 	UTankFuelComponent();
 
-	UTankFuel* Fuel;
-
 	FVector TankPosition;
 
-	//UPROPERTY(EditDefaultsOnly, Category = "Setup")
-	//int32 FuelCount = 2000;
+	UTankFuel* Fuel;
 
 	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
 };

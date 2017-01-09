@@ -2,7 +2,6 @@
 
 #include "BattleTank.h"
 #include "ItemFuel.h"
-#include "TankFuel.h"
 
 
 // Sets default values
@@ -23,12 +22,16 @@ void AItemFuel::BeginPlay()
 	FuelAmountToAdd = rand() % (MaxFuelToAdd - MinFuelToAdd + 1) + MinFuelToAdd;
 }
 
+
 void AItemFuel::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent,
 	FVector NormalImpulse, const FHitResult& Hit)
-{
-	UE_LOG(LogTemp, Warning, TEXT("Item Fuel"));
-	//UTankFuel Fuel;
-	//Fuel.SetFuelAmount(Fuel.GetFuelAmount() + FuelAmountToAdd);
+{	
+	OnHitFuel.Broadcast();
 	CollisionMesh->DestroyComponent();
+}
+
+int32 AItemFuel::GetFuelAmountToAdd()
+{
+	return FuelAmountToAdd;
 }
 
