@@ -6,6 +6,7 @@
 #include "Projectile.h"
 #include "FlameThrower.h"
 #include "TankAimingComponent.h"
+#include "WeaponComponent.h"
 #include "TankFuel.h"
 
 
@@ -56,11 +57,12 @@ int32 UTankAimingComponent::GetRoundsLeft() const
 	return AmmoCount;
 }
 
-void UTankAimingComponent::Initialize(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet, UTankFuel* FuelToSet)
+void UTankAimingComponent::Initialize(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet, UTankFuel* FuelToSet, UWeaponComponent* WeaponToSet)
 {
 	Barrel = BarrelToSet;
 	Turret = TurretToSet;
 	Fuel = FuelToSet;
+	Weapon = WeaponToSet;
 }
 
 void UTankAimingComponent::AimAt(FVector HitLocation)
@@ -106,7 +108,7 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 		Turret->RotateTurret(-DeltaRotator.Yaw);
 	}
 }
-
+/*
 void UTankAimingComponent::Fire()
 {
 	if(FiringState == EFiringState::Locked || FiringState == EFiringState::Aiming)
@@ -119,6 +121,25 @@ void UTankAimingComponent::Fire()
 		auto Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint, ProjectileLocation, ProjectileRotation);
 
 		Projectile->LaunchProjectile(LaunchSpeed);
+		LastFireTime = FPlatformTime::Seconds();
+		AmmoCount--;
+	}
+}*/
+
+void UTankAimingComponent::Fire()
+{
+	if (FiringState == EFiringState::Locked || FiringState == EFiringState::Aiming)
+	{
+		if (!Barrel) { return; }
+		if (!Weapon) { return; }
+		if (!ProjectileBlueprint) { return; }
+
+		auto FiringLocation = Barrel->GetSocketLocation(FName("Projectile"));
+		auto FiringRotation = Barrel->GetSocketRotation(FName("Projectile"));
+		auto FiringBlueprint = Weapon->CurrentWeapon();
+		auto FireWeapon = GetWorld()->SpawnActor<AProjectile>(FiringBlueprint, FiringLocation, FiringRotation);
+
+		FireWeapon->LaunchProjectile(LaunchSpeed);
 		LastFireTime = FPlatformTime::Seconds();
 		AmmoCount--;
 	}
