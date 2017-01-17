@@ -11,11 +11,8 @@ void UTankFuel::BeginPlay()
 
 void UTankFuel::SetFuelAmount(int32 FuelAmount)
 {
-	FuelCount = FuelAmount;
-	if (FuelCount < 0)
-	{
-		FuelCount = 0;
-	}
+	FuelCount = FuelAmount + FuelCount;
+	
 }
 
 int32 UTankFuel::GetFuelAmount() const
@@ -23,7 +20,7 @@ int32 UTankFuel::GetFuelAmount() const
 	return FuelCount;
 }
 
-bool UTankFuel::IsThereFuel()
+bool UTankFuel::IsThereFuel() const
 {
 	return (GetFuelAmount() > 0);
 }

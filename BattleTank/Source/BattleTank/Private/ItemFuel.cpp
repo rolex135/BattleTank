@@ -26,7 +26,6 @@ void AItemFuel::BeginPlay()
 void AItemFuel::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent,
 	FVector NormalImpulse, const FHitResult& Hit)
 {	
-	OnHitFuel.Broadcast();
 	CollisionMesh->DestroyComponent();
 }
 

@@ -23,7 +23,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Fuel")
 	void SetFuelAmount(int32 FuelAmount);
 
-	bool IsThereFuel();
+	bool IsThereFuel() const;
 
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
