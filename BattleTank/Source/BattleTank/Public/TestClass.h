@@ -2,12 +2,11 @@
 
 #pragma once
 
-#include "Weapon.h"
 
 /**
  * 
  */
-class BATTLETANK_API TestClass : AWeapon
+class BATTLETANK_API TestClass
 {
 public:
 	TestClass();

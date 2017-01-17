@@ -2,6 +2,7 @@
 
 #include "BattleTank.h"
 #include "WeaponComponent.h"
+#include "WeaponInterface.h"
 #include "Projectile.h"
 
 
@@ -25,6 +26,14 @@ void UWeaponComponent::BeginPlay()
 
 UClass* UWeaponComponent::CurrentWeapon()
 {
+	TArray<AActor*> AllActors;
+	UGameplayStatics::GetAllActorsWithInterface(GetWorld(), UWeaponInterface::StaticClass(), AllActors);
+	for (int32 i = 0; i < AllActors.Num(); i++)
+	{
+		//TODO
+		UE_LOG(LogTemp, Warning, TEXT("%s"), *AllActors[i]->GetName());
+
+	}
 	return ProjectileBlueprint;
 }
 
