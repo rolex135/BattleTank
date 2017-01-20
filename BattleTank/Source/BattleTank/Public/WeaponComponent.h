@@ -5,8 +5,19 @@
 #include "Components/ActorComponent.h"
 #include "WeaponComponent.generated.h"
 
-class AProjectile;
+//Enum for current weapon
+UENUM()
+enum class ECurrentWeapon : uint8
+{
+	MainWeapon,
+	SecondaryWeapon
+};
 
+//Forward declarations
+class AProjectile;
+class AIceBlast;
+
+//Resposible for showing current weapon and setting ammo count
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class BATTLETANK_API UWeaponComponent : public UActorComponent
 {
@@ -14,11 +25,20 @@ class BATTLETANK_API UWeaponComponent : public UActorComponent
 
 public:	
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
-	UClass* CurrentWeapon();
+	void SetCurrentWeapon(ECurrentWeapon WeaponToSet);
+
+	void SpawnCurrentWeaponAndLaunch(FVector FiringLocation, FRotator FiringRotation, float LaunchSpeed);
 
 	void SetAmmoCount(int32 AmmoCountToSet);
 
 	int32 GetAmmoCount();
+
+	ECurrentWeapon GetCurrentWeapon() const;
+
+
+protected:
+	UPROPERTY(BlueprintReadOnly, Category = "State")
+	ECurrentWeapon CurrentWeapon = ECurrentWeapon::MainWeapon;
 
 private:
 	// Sets default values for this component's properties
@@ -30,6 +50,9 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	TSubclassOf<AProjectile> ProjectileBlueprint;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	TSubclassOf<AIceBlast> IceBlastBlueprint;
 
 	int32 AmmoCount;
 

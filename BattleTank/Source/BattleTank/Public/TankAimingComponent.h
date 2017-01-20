@@ -19,7 +19,6 @@ enum class EFiringState : uint8
 //Forward declaration
 class UTankBarrel;
 class UTankTurret;
-class AProjectile;
 class AFlameThrower;
 class UTankFuel;
 class UWeaponComponent;
@@ -76,9 +75,6 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float ReloadTimeInSeconds = 3.0f;
-
-	UPROPERTY(EditDefaultsOnly, Category = "Setup")
-	TSubclassOf<AProjectile> ProjectileBlueprint;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	TSubclassOf<AFlameThrower> FlameThrowerBlueprint;

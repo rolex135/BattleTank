@@ -38,11 +38,10 @@ void AProjectile::BeginPlay()
 	
 }
 
-void AProjectile::LaunchProjectile(float Speed)
+void AProjectile::Launch(float Speed)
 {
 	ProjectileMovement->SetVelocityInLocalSpace(FVector::ForwardVector * Speed);
 	ProjectileMovement->Activate();
-	Test();
 }
 
 void AProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent,

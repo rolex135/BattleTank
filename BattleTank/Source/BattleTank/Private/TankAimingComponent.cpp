@@ -4,6 +4,7 @@
 #include "TankBarrel.h"
 #include "TankTurret.h"
 #include "Projectile.h"
+#include "IceBlast.h"
 #include "FlameThrower.h"
 #include "TankAimingComponent.h"
 #include "WeaponComponent.h"
@@ -132,14 +133,11 @@ void UTankAimingComponent::Fire()
 	{
 		if (!Barrel) { return; }
 		if (!Weapon) { return; }
-		if (!ProjectileBlueprint) { return; }
 
 		auto FiringLocation = Barrel->GetSocketLocation(FName("Projectile"));
 		auto FiringRotation = Barrel->GetSocketRotation(FName("Projectile"));
-		auto FiringBlueprint = Weapon->CurrentWeapon();
-		auto FireWeapon = GetWorld()->SpawnActor<AProjectile>(FiringBlueprint, FiringLocation, FiringRotation);
-
-		FireWeapon->LaunchProjectile(LaunchSpeed);
+		//auto FireWeapon = GetWorld()->SpawnActor<AIceBlast>(FiringBlueprint, FiringLocation, FiringRotation);
+		Weapon->SpawnCurrentWeaponAndLaunch(FiringLocation, FiringRotation, LaunchSpeed);
 		LastFireTime = FPlatformTime::Seconds();
 		AmmoCount--;
 	}

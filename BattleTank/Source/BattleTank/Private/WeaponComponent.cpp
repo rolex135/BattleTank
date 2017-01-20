@@ -2,9 +2,8 @@
 
 #include "BattleTank.h"
 #include "WeaponComponent.h"
-#include "WeaponInterface.h"
 #include "Projectile.h"
-
+#include "IceBlast.h"
 
 // Sets default values for this component's properties
 UWeaponComponent::UWeaponComponent()
@@ -24,17 +23,22 @@ void UWeaponComponent::BeginPlay()
 	AmmoCount = StartingAmmo;
 }
 
-UClass* UWeaponComponent::CurrentWeapon()
+void UWeaponComponent::SpawnCurrentWeaponAndLaunch(FVector FiringLocation, FRotator FiringRotation, float LaunchSpeed)
 {
-	TArray<AActor*> AllActors;
-	UGameplayStatics::GetAllActorsWithInterface(GetWorld(), UWeaponInterface::StaticClass(), AllActors);
-	for (int32 i = 0; i < AllActors.Num(); i++)
-	{
-		//TODO
-		UE_LOG(LogTemp, Warning, TEXT("%s"), *AllActors[i]->GetName());
 
+	if (GetCurrentWeapon() == ECurrentWeapon::MainWeapon)
+	{
+		auto Weapon = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint, FiringLocation, FiringRotation);
+		Weapon->Launch(LaunchSpeed);
+	}else if(GetCurrentWeapon() == ECurrentWeapon::SecondaryWeapon)
+	{
+		auto Weapon = GetWorld()->SpawnActor<AIceBlast>(IceBlastBlueprint, FiringLocation, FiringRotation);
+		Weapon->Launch(LaunchSpeed);
 	}
-	return ProjectileBlueprint;
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Weapon not found"))
+	}
 }
 
 void UWeaponComponent::SetAmmoCount(int32 AmmoCountToSet)
@@ -45,4 +49,14 @@ void UWeaponComponent::SetAmmoCount(int32 AmmoCountToSet)
 int32 UWeaponComponent::GetAmmoCount()
 {
 	return AmmoCount;
+}
+
+ECurrentWeapon UWeaponComponent::GetCurrentWeapon() const
+{
+	return CurrentWeapon;
+}
+
+void UWeaponComponent::SetCurrentWeapon(ECurrentWeapon WeaponToSet)
+{
+	CurrentWeapon = WeaponToSet;
 }
