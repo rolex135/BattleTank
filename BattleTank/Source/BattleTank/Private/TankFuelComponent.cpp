@@ -47,7 +47,7 @@ void UTankFuelComponent::TankMovingBurnFuel()
 	if (!CurrentPositionOfTank.Equals(TankPosition, 1.f))
 	{
 		TankPosition = Fuel->GetComponentLocation();
-		Fuel->SetFuelAmount(Fuel->GetFuelAmount() - 2);
+		Fuel->SetFuelAmount(-2);
 	}
 }
 
@@ -56,7 +56,7 @@ void UTankFuelComponent::TankFlameThrowerBurnFuel()
 	if (!Fuel) { return; }
 	if (IsFlameThrowerActive && Fuel->IsThereFuel())
 	{
-		Fuel->SetFuelAmount(Fuel->GetFuelAmount() - 1);
+		Fuel->SetFuelAmount(-1);
 	}
 }
 
