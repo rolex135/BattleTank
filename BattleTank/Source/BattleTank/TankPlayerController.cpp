@@ -6,6 +6,7 @@
 #include "TankPlayerController.h"
 #include "Tank.h"
 #include "TankFuelComponent.h"
+#include "WeaponComponent.h"
 #include "TankFuel.h"
 
 void ATankPlayerController::BeginPlay()
@@ -16,6 +17,11 @@ void ATankPlayerController::BeginPlay()
 	if (!AimingComponent) { return; }
 	
 	FoundAimingComponent(AimingComponent);
+
+	auto WeaponComponent = GetPawn()->FindComponentByClass<UWeaponComponent>();
+	if (!WeaponComponent) { return; }
+
+	FoundWeaponComponent(WeaponComponent);
 
 	auto FuelComponent = GetPawn()->FindComponentByClass<UTankFuelComponent>();
 	if (!FuelComponent) { return; }

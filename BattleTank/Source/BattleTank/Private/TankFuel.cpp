@@ -9,7 +9,7 @@ void UTankFuel::BeginPlay()
 	FuelCount = StartingFuel;
 }
 
-void UTankFuel::SetFuelAmount(int32 FuelAmount)
+void UTankFuel::DecreaseOrAddFuel(int32 FuelAmount)
 {
 	FuelCount = FuelAmount + FuelCount;
 	

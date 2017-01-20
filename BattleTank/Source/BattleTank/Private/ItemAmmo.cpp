@@ -25,8 +25,12 @@ void AItemAmmo::BeginPlay()
 void AItemAmmo::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent,
 	FVector NormalImpulse, const FHitResult& Hit)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Item ammo"));
 	CollisionMesh->DestroyComponent();
+}
+
+int32 AItemAmmo::GetAmmoAmountToAdd()
+{
+	return AmmoAmountToAdd;
 }
 
 

@@ -14,6 +14,9 @@ public:
 	// Sets default values for this actor's properties
 	AItemAmmo();
 
+	UFUNCTION(BlueprintCallable, Category = "Setup")
+	int32 GetAmmoAmountToAdd();
+
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 

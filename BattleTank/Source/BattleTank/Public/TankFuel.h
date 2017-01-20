@@ -21,7 +21,7 @@ public:
 	int32 GetFuelAmount() const;
 
 	UFUNCTION(BlueprintCallable, Category = "Fuel")
-	void SetFuelAmount(int32 FuelAmount);
+	void DecreaseOrAddFuel(int32 FuelAmount);
 
 	bool IsThereFuel() const;
 

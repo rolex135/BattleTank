@@ -5,14 +5,22 @@
 #include "Components/ActorComponent.h"
 #include "ItemSpawnComponent.generated.h"
 
+//Enum for different item types
+UENUM()
+enum class EItems : uint8
+{
+	Fuel,
+	Ammo,
+};
+
+//Forward declarations
 class AItemFuel;
 class AItemAmmo;
 class UTankFuel;
 
 /*
-Responsible for spawning random items
+Responsible for spawning random items in the world
 */
-
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class BATTLETANK_API UItemSpawnComponent : public UActorComponent
 {
@@ -30,4 +38,7 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	TSubclassOf<AItemAmmo> AmmoBlueprint;
+
+	//Hardcoded number of enum items, change this when adding to items to EItem enum class
+	const uint8 NumberOfItems = 2;
 };

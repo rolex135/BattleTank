@@ -30,10 +30,12 @@ void UWeaponComponent::SpawnCurrentWeaponAndLaunch(FVector FiringLocation, FRota
 	{
 		auto Weapon = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint, FiringLocation, FiringRotation);
 		Weapon->Launch(LaunchSpeed);
+		DecreaseOrAddAmmo(-1);
 	}else if(GetCurrentWeapon() == ECurrentWeapon::SecondaryWeapon)
 	{
 		auto Weapon = GetWorld()->SpawnActor<AIceBlast>(IceBlastBlueprint, FiringLocation, FiringRotation);
 		Weapon->Launch(LaunchSpeed);
+		DecreaseOrAddAmmo(-1);
 	}
 	else
 	{
@@ -41,12 +43,13 @@ void UWeaponComponent::SpawnCurrentWeaponAndLaunch(FVector FiringLocation, FRota
 	}
 }
 
-void UWeaponComponent::SetAmmoCount(int32 AmmoCountToSet)
+
+void UWeaponComponent::DecreaseOrAddAmmo(int32 AmmoCountToDecrease)
 {
-	AmmoCount = AmmoCountToSet;
+	AmmoCount = GetAmmoCount() + AmmoCountToDecrease;
 }
 
-int32 UWeaponComponent::GetAmmoCount()
+int32 UWeaponComponent::GetAmmoCount() const
 {
 	return AmmoCount;
 }

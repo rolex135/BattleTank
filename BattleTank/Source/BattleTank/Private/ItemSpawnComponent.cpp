@@ -17,13 +17,13 @@ void UItemSpawnComponent::SpawnRandomItemActor(FVector LocationToSpawn)
 	FActorSpawnParameters SpawnInfo;
 	SpawnInfo.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 
-	int32 NumberOfActors = 2;
-	int32 RandomActorNumber = rand() % NumberOfActors + 1;
-	if (RandomActorNumber == 1)
+	//int32 NumberOfActors = 2;
+	EItems RandomActorNumber = static_cast<EItems>(rand() % NumberOfItems);
+	if (RandomActorNumber == EItems::Fuel)
 	{
 		GetWorld()->SpawnActor<AItemFuel>(FuelBlueprint, LocationToSpawn, FRotator(0.f, 0.f, 0.f), SpawnInfo);
 	}
-	else if (RandomActorNumber == 2)
+	else if (RandomActorNumber == EItems::Ammo)
 	{
 		GetWorld()->SpawnActor<AItemAmmo>(AmmoBlueprint, LocationToSpawn, FRotator(0.f, 0.f, 0.f), SpawnInfo);
 	}

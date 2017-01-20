@@ -37,9 +37,6 @@ public:
 	void Fire();
 
 	UFUNCTION(BlueprintCallable, Category = "Firing")
-	int32 GetRoundsLeft() const;
-
-	UFUNCTION(BlueprintCallable, Category = "Firing")
 	void ThrowFlame();
 
 	void AimAt(FVector HitLocation);
@@ -78,9 +75,6 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	TSubclassOf<AFlameThrower> FlameThrowerBlueprint;
-
-	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-	int32 AmmoCount = 20;
 
 	void MoveBarrelTowards(FVector AimDirection);
 

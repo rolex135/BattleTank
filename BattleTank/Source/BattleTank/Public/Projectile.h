@@ -3,12 +3,11 @@
 #pragma once
 
 #include "GameFramework/Actor.h"
-#include "WeaponInterface.h"
 #include "Projectile.generated.h"
 
 
 UCLASS()
-class BATTLETANK_API AProjectile : public AActor, public IWeaponInterface
+class BATTLETANK_API AProjectile : public AActor
 {
 	GENERATED_BODY()
 	

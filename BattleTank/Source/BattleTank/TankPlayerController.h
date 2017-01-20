@@ -9,6 +9,7 @@
 class UTankAimingComponent;
 class UTankFuelComponent;
 class UTankFuel;
+class UWeaponComponent;
 
 /**
  * Responsible for helping the player aim.
@@ -21,6 +22,9 @@ class BATTLETANK_API ATankPlayerController : public APlayerController
 protected:
 	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
 	void FoundAimingComponent(UTankAimingComponent* AimCompRef);
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
+	void FoundWeaponComponent(UWeaponComponent* WeaponCompRef);
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
 	void FoundFuelComponent(UTankFuelComponent* FuelCompRef);
