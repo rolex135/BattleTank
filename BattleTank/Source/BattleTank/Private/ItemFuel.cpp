@@ -18,13 +18,12 @@ AItemFuel::AItemFuel()
 void AItemFuel::BeginPlay()
 {
 	Super::BeginPlay();
-	CollisionMesh->OnComponentHit.AddDynamic(this, &AItemFuel::OnHit);
+	CollisionMesh->OnComponentBeginOverlap.AddDynamic(this, &AItemFuel::OnOverlapBegin);
 	FuelAmountToAdd = rand() % (MaxFuelToAdd - MinFuelToAdd + 1) + MinFuelToAdd;
 }
 
 
-void AItemFuel::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent,
-	FVector NormalImpulse, const FHitResult& Hit)
+void AItemFuel::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {	
 	CollisionMesh->DestroyComponent();
 }
