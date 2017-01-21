@@ -23,6 +23,9 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Health")
 	float GetHealthPercent() const;
 
+	UFUNCTION(BlueprintCallable, Category = "Health")
+	void AddHealth(float HealthToAdd);
+
 private:
 	ATank();
 

@@ -34,3 +34,12 @@ float ATank::GetHealthPercent() const
 {
 	return (float)CurrentHealth / (float)StartingHealth;
 }
+
+void ATank::AddHealth(float HealthToAdd)
+{
+	CurrentHealth = (float)CurrentHealth + HealthToAdd;
+	if (CurrentHealth > StartingHealth)
+	{
+		CurrentHealth = StartingHealth;
+	}
+}
