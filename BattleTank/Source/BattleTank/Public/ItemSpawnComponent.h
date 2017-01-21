@@ -11,12 +11,13 @@ enum class EItems : uint8
 {
 	Fuel,
 	Ammo,
+	Health
 };
 
 //Forward declarations
 class AItemFuel;
 class AItemAmmo;
-class UTankFuel;
+class AItemHealth;
 
 /*
 Responsible for spawning random items in the world
@@ -39,6 +40,9 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	TSubclassOf<AItemAmmo> AmmoBlueprint;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	TSubclassOf<AItemHealth> HealthBlueprint;
+
 	//Hardcoded number of enum items, change this when adding to items to EItem enum class
-	const uint8 NumberOfItems = 2;
+	const uint8 NumberOfItems = 3;
 };
