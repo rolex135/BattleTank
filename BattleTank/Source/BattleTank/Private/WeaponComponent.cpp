@@ -43,9 +43,9 @@ void UWeaponComponent::SpawnFlameThrowerAndLaunch(FVector FiringLocation, FRotat
 	FlameThrower->Launch(FlameThrowerLaunchSpeed);
 }
 
-void UWeaponComponent::DecreaseOrAddAmmo(int32 AmmoCountToDecrease)
+void UWeaponComponent::DecreaseOrAddAmmo(int32 AmmoCountToDecreaseOrAdd)
 {
-	AmmoCount = GetAmmoCount() + AmmoCountToDecrease;
+	AmmoCount = GetAmmoCount() + AmmoCountToDecreaseOrAdd;
 }
 
 int32 UWeaponComponent::GetAmmoCount() const

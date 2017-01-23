@@ -18,7 +18,7 @@ class AProjectile;
 class AIceBlast;
 class AFlameThrower;
 
-//Resposible for showing current weapon and setting ammo count
+//Resposible for showing current weapon, spawning actors and setting ammo count
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class BATTLETANK_API UWeaponComponent : public UActorComponent
 {
@@ -29,7 +29,7 @@ public:
 	void SetCurrentWeapon(ECurrentWeapon WeaponToSet);
 
 	UFUNCTION(BlueprintCallable, Category = "Ammo")
-	void DecreaseOrAddAmmo(int32 AmmoCountToDecrease);
+	void DecreaseOrAddAmmo(int32 AmmoCountToDecreaseOrAdd);
 
 	UFUNCTION(BlueprintCallable, Category = "Firing")
 	int32 GetAmmoCount() const;
