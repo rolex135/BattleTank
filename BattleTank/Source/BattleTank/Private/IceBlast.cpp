@@ -30,3 +30,10 @@ AIceBlast::AIceBlast()
 
 }
 
+void AIceBlast::BeginPlay()
+{
+	Super::BeginPlay();
+	Damage = IceBlastDamage;
+	DestroyDelay = IceBlastDestroyDelay;
+}
+

@@ -33,7 +33,7 @@ void AWeapons::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPri
 	CollisionMesh->DestroyComponent();
 
 	UGameplayStatics::ApplyRadialDamage(
-		this, ProjectileDamage, GetActorLocation(), ExplosionForce->Radius, UDamageType::StaticClass(),
+		this, Damage, GetActorLocation(), ExplosionForce->Radius, UDamageType::StaticClass(),
 		TArray<AActor*>());
 
 	FTimerHandle Timer;

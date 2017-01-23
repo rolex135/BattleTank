@@ -14,4 +14,13 @@ class BATTLETANK_API AProjectile : public AWeapons
 public:	
 	// Sets default values for this actor's properties
 	AProjectile();
+
+	virtual void BeginPlay() override;
+
+private:
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	float ProjectileDamage = 20.f;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	float ProjectileDestroyDelay = 8.f;
 };

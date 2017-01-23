@@ -124,16 +124,14 @@ void UTankAimingComponent::Fire()
 void UTankAimingComponent::ThrowFlame()
 {
 	if (!Barrel) { return; }
-	if (!FlameThrowerBlueprint) { return; }
 	if (!Fuel) { return; }
+	if (!Weapon) { return; }
 
 	if (Fuel->IsThereFuel())
 	{
 		auto FlameThrowerLocation = Barrel->GetSocketLocation(FName("FlameThrow"));
 		auto FlameThrowerRotation = Barrel->GetSocketRotation(FName("FlameThrow"));
-		auto FlameThrower = GetWorld()->SpawnActor<AFlameThrower>(FlameThrowerBlueprint, FlameThrowerLocation, FlameThrowerRotation);
-
-		FlameThrower->FireFlame(FlameDistance);
+		Weapon->SpawnFlameThrowerAndLaunch(FlameThrowerLocation, FlameThrowerRotation);
 	}
 }
 

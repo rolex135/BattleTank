@@ -29,3 +29,10 @@ AProjectile::AProjectile()
 	ExplosionForce->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 
 }
+
+void AProjectile::BeginPlay()
+{
+	Super::BeginPlay();
+	Damage = ProjectileDamage;
+	DestroyDelay = ProjectileDestroyDelay;
+}

@@ -19,7 +19,6 @@ enum class EFiringState : uint8
 //Forward declaration
 class UTankBarrel;
 class UTankTurret;
-class AFlameThrower;
 class UTankFuel;
 class UWeaponComponent;
 
@@ -56,7 +55,7 @@ private:
 
 	UTankFuel* Fuel = nullptr;
 
-	UWeaponComponent *Weapon = nullptr;
+	UWeaponComponent* Weapon = nullptr;
 
 	bool bHaveAimSolution;
 
@@ -65,13 +64,7 @@ private:
 	FVector AimDirection;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-	float FlameDistance = 2000.f;
-
-	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float ReloadTimeInSeconds = 3.0f;
-
-	UPROPERTY(EditDefaultsOnly, Category = "Setup")
-	TSubclassOf<AFlameThrower> FlameThrowerBlueprint;
 
 	void MoveBarrelTowards(FVector AimDirection);
 

@@ -16,6 +16,7 @@ enum class ECurrentWeapon : uint8
 //Forward declarations
 class AProjectile;
 class AIceBlast;
+class AFlameThrower;
 
 //Resposible for showing current weapon and setting ammo count
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -34,6 +35,8 @@ public:
 	int32 GetAmmoCount() const;
 
 	void SpawnCurrentWeaponAndLaunch(FVector FiringLocation, FRotator FiringRotation);
+
+	void SpawnFlameThrowerAndLaunch(FVector FiringLocation, FRotator FiringRotation);
 	
 	float GetCurrentWeaponLaunchSpeed() const;
 
@@ -56,6 +59,9 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	TSubclassOf<AIceBlast> IceBlastBlueprint;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	TSubclassOf<AFlameThrower> FlameThrowerBlueprint;
+
 	UPROPERTY(EditDefaultsOnly, Category = "Ammo")
 	int32 AmmoCount;
 
@@ -64,6 +70,9 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	float IceBlastLaunchSpeed = 2000.f;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	float FlameThrowerLaunchSpeed = 1500.f;
 
 	int32 StartingAmmo = 10;
 };

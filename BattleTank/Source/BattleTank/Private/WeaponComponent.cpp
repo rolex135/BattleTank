@@ -3,6 +3,7 @@
 #include "BattleTank.h"
 #include "WeaponComponent.h"
 #include "Projectile.h"
+#include "FlameThrower.h"
 #include "IceBlast.h"
 
 // Sets default values for this component's properties
@@ -22,12 +23,12 @@ void UWeaponComponent::SpawnCurrentWeaponAndLaunch(FVector FiringLocation, FRota
 	if (GetCurrentWeapon() == ECurrentWeapon::Projectile)
 	{
 		auto Weapon = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint, FiringLocation, FiringRotation);
-		Weapon->Launch(ProjectileLaunchSpeed);
+		Weapon->Launch(GetCurrentWeaponLaunchSpeed());
 		DecreaseOrAddAmmo(-1);
 	}else if(GetCurrentWeapon() == ECurrentWeapon::IceBlast)
 	{
 		auto Weapon = GetWorld()->SpawnActor<AIceBlast>(IceBlastBlueprint, FiringLocation, FiringRotation);
-		Weapon->Launch(IceBlastLaunchSpeed);
+		Weapon->Launch(GetCurrentWeaponLaunchSpeed());
 		DecreaseOrAddAmmo(-1);
 	}
 	else
@@ -36,6 +37,11 @@ void UWeaponComponent::SpawnCurrentWeaponAndLaunch(FVector FiringLocation, FRota
 	}
 }
 
+void UWeaponComponent::SpawnFlameThrowerAndLaunch(FVector FiringLocation, FRotator FiringRotation)
+{
+	auto FlameThrower = GetWorld()->SpawnActor<AFlameThrower>(FlameThrowerBlueprint, FiringLocation, FiringRotation);
+	FlameThrower->Launch(FlameThrowerLaunchSpeed);
+}
 
 void UWeaponComponent::DecreaseOrAddAmmo(int32 AmmoCountToDecrease)
 {

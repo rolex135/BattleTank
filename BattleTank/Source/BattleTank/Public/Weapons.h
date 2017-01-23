@@ -32,11 +32,9 @@ protected:
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	URadialForceComponent* ExplosionForce = nullptr;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Setup")
-	float DestroyDelay = 10.f;
+	float DestroyDelay;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Setup")
-	float ProjectileDamage = 20.f;
+	float Damage;
 
 	UProjectileMovementComponent* ProjectileMovement = nullptr;
 
