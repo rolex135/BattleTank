@@ -64,6 +64,8 @@ void UTankAimingComponent::Initialize(UTankBarrel* BarrelToSet, UTankTurret* Tur
 void UTankAimingComponent::AimAt(FVector HitLocation)
 {
 	if (!Barrel) { return; }
+	if (!Weapon) { return; }
+	float CurrentWeaponLaunchSpeed = Weapon->GetCurrentWeaponLaunchSpeed();
 	FVector OutLaunchVelocity;
 	FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile"));
 	bool bHaveAimSolution = UGameplayStatics::SuggestProjectileVelocity(
@@ -71,7 +73,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation)
 		OutLaunchVelocity,
 		StartLocation,
 		HitLocation,
-		LaunchSpeed,
+		CurrentWeaponLaunchSpeed,
 		false,
 		0,
 		0,
@@ -114,7 +116,7 @@ void UTankAimingComponent::Fire()
 
 		auto FiringLocation = Barrel->GetSocketLocation(FName("Projectile"));
 		auto FiringRotation = Barrel->GetSocketRotation(FName("Projectile"));
-		Weapon->SpawnCurrentWeaponAndLaunch(FiringLocation, FiringRotation, LaunchSpeed);
+		Weapon->SpawnCurrentWeaponAndLaunch(FiringLocation, FiringRotation);
 		LastFireTime = FPlatformTime::Seconds();
 	}
 }

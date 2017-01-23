@@ -9,8 +9,8 @@
 UENUM()
 enum class ECurrentWeapon : uint8
 {
-	MainWeapon,
-	SecondaryWeapon
+	Projectile,
+	IceBlast
 };
 
 //Forward declarations
@@ -33,21 +33,20 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Firing")
 	int32 GetAmmoCount() const;
 
-	void SpawnCurrentWeaponAndLaunch(FVector FiringLocation, FRotator FiringRotation, float LaunchSpeed);
+	void SpawnCurrentWeaponAndLaunch(FVector FiringLocation, FRotator FiringRotation);
 	
+	float GetCurrentWeaponLaunchSpeed() const;
 
 	ECurrentWeapon GetCurrentWeapon() const;
 
 
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
-	ECurrentWeapon CurrentWeapon = ECurrentWeapon::MainWeapon;
+	ECurrentWeapon CurrentWeapon = ECurrentWeapon::Projectile;
 
 private:
 	// Sets default values for this component's properties
 	UWeaponComponent();
-
-	virtual void TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction ) override;
 
 	virtual void BeginPlay();
 
@@ -59,6 +58,12 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Ammo")
 	int32 AmmoCount;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	float ProjectileLaunchSpeed = 4000.f;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	float IceBlastLaunchSpeed = 2000.f;
 
 	int32 StartingAmmo = 10;
 };

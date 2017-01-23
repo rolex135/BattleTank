@@ -8,13 +8,7 @@
 // Sets default values for this component's properties
 UWeaponComponent::UWeaponComponent()
 {
-	PrimaryComponentTick.bCanEverTick = true;
-}
-
-// Called every frame
-void UWeaponComponent::TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction )
-{
-	Super::TickComponent( DeltaTime, TickType, ThisTickFunction );
+	PrimaryComponentTick.bCanEverTick = false;
 }
 
 void UWeaponComponent::BeginPlay()
@@ -23,18 +17,17 @@ void UWeaponComponent::BeginPlay()
 	AmmoCount = StartingAmmo;
 }
 
-void UWeaponComponent::SpawnCurrentWeaponAndLaunch(FVector FiringLocation, FRotator FiringRotation, float LaunchSpeed)
+void UWeaponComponent::SpawnCurrentWeaponAndLaunch(FVector FiringLocation, FRotator FiringRotation)
 {
-
-	if (GetCurrentWeapon() == ECurrentWeapon::MainWeapon)
+	if (GetCurrentWeapon() == ECurrentWeapon::Projectile)
 	{
 		auto Weapon = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint, FiringLocation, FiringRotation);
-		Weapon->Launch(LaunchSpeed);
+		Weapon->Launch(ProjectileLaunchSpeed);
 		DecreaseOrAddAmmo(-1);
-	}else if(GetCurrentWeapon() == ECurrentWeapon::SecondaryWeapon)
+	}else if(GetCurrentWeapon() == ECurrentWeapon::IceBlast)
 	{
 		auto Weapon = GetWorld()->SpawnActor<AIceBlast>(IceBlastBlueprint, FiringLocation, FiringRotation);
-		Weapon->Launch(LaunchSpeed);
+		Weapon->Launch(IceBlastLaunchSpeed);
 		DecreaseOrAddAmmo(-1);
 	}
 	else
@@ -57,6 +50,22 @@ int32 UWeaponComponent::GetAmmoCount() const
 ECurrentWeapon UWeaponComponent::GetCurrentWeapon() const
 {
 	return CurrentWeapon;
+}
+
+float UWeaponComponent::GetCurrentWeaponLaunchSpeed() const
+{
+	float CurrentWeaponLaunchSpeed = 0.f;
+	switch (GetCurrentWeapon())
+	{
+	case ECurrentWeapon::Projectile:
+		CurrentWeaponLaunchSpeed = ProjectileLaunchSpeed;
+		break;
+	case ECurrentWeapon::IceBlast:
+		CurrentWeaponLaunchSpeed = IceBlastLaunchSpeed;
+	default:
+		break;
+	}
+	return CurrentWeaponLaunchSpeed;
 }
 
 void UWeaponComponent::SetCurrentWeapon(ECurrentWeapon WeaponToSet)

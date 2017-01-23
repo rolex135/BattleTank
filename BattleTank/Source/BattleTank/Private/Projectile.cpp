@@ -29,39 +29,3 @@ AProjectile::AProjectile()
 	ExplosionForce->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 
 }
-
-// Called when the game starts or when spawned
-void AProjectile::BeginPlay()
-{
-	Super::BeginPlay();
-	CollisionMesh->OnComponentHit.AddDynamic(this, &AProjectile::OnHit);
-	
-}
-
-void AProjectile::Launch(float Speed)
-{
-	ProjectileMovement->SetVelocityInLocalSpace(FVector::ForwardVector * Speed);
-	ProjectileMovement->Activate();
-}
-
-void AProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent,
-	FVector NormalImpulse, const FHitResult& Hit)
-{
-	LaunchBlast->Deactivate();
-	ImpactBlast->Activate();
-	ExplosionForce->FireImpulse();
-	SetRootComponent(ImpactBlast);
-	CollisionMesh->DestroyComponent();
-
-	UGameplayStatics::ApplyRadialDamage(
-		this, ProjectileDamage, GetActorLocation(), ExplosionForce->Radius, UDamageType::StaticClass(),
-		TArray<AActor*>());
-
-	FTimerHandle Timer;
-	GetWorld()->GetTimerManager().SetTimer(Timer, this, &AProjectile::OnTimerExpire, DestroyDelay, false);
-}
-
-void AProjectile::OnTimerExpire()
-{
-	Destroy();
-}

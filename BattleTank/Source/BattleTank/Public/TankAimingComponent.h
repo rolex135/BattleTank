@@ -65,9 +65,6 @@ private:
 	FVector AimDirection;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-	float LaunchSpeed = 4000.f;
-
-	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float FlameDistance = 2000.f;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")

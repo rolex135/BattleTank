@@ -23,6 +23,7 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Health")
 	float GetHealthPercent() const;
 
+	//mainly for adding health when picking up health items on ground
 	UFUNCTION(BlueprintCallable, Category = "Health")
 	void AddHealth(float HealthToAdd);
 
