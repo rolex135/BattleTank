@@ -64,7 +64,7 @@ private:
 	FVector AimDirection;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-	float ReloadTimeInSeconds = 3.0f;
+	float ReloadTimeInSeconds = 2.0f;
 
 	void MoveBarrelTowards(FVector AimDirection);
 

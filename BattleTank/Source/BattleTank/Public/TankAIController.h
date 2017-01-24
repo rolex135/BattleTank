@@ -16,7 +16,7 @@ class BATTLETANK_API ATankAIController : public AAIController
 protected:
 	//How close can the AI tank get
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
-	float AcceptanceRadius = 4000.f;
+	float AcceptanceRadius = 3000.f;
 
 private:
 

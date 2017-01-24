@@ -66,13 +66,13 @@ private:
 	int32 AmmoCount;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
-	float ProjectileLaunchSpeed = 4000.f;
+	float ProjectileLaunchSpeed = 8000.f;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	float IceBlastLaunchSpeed = 2000.f;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
-	float FlameThrowerLaunchSpeed = 1500.f;
+	float FlameThrowerLaunchSpeed = 3000.f;
 
 	int32 StartingAmmo = 10;
 };
