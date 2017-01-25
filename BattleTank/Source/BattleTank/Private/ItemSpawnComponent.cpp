@@ -5,6 +5,7 @@
 #include "ItemFuel.h"
 #include "ItemAmmo.h"
 #include "ItemHealth.h"
+#include "ItemArmor.h"
 
 
 UItemSpawnComponent::UItemSpawnComponent()
@@ -14,7 +15,7 @@ UItemSpawnComponent::UItemSpawnComponent()
 
 void UItemSpawnComponent::SpawnRandomItemActor(FVector LocationToSpawn)
 {
-	if (!FuelBlueprint || !AmmoBlueprint || !HealthBlueprint) { return; }
+	if (!FuelBlueprint || !AmmoBlueprint || !HealthBlueprint || !ArmorBlueprint) { return; }
 	FActorSpawnParameters SpawnInfo;
 	SpawnInfo.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 
@@ -30,6 +31,10 @@ void UItemSpawnComponent::SpawnRandomItemActor(FVector LocationToSpawn)
 	else if (RandomActorNumber == EItems::Health)
 	{
 		GetWorld()->SpawnActor<AItemHealth>(HealthBlueprint, LocationToSpawn, FRotator(0.f, 0.f, 0.f), SpawnInfo);
+	}
+	else if (RandomActorNumber == EItems::Armor)
+	{
+		GetWorld()->SpawnActor<AItemArmor>(ArmorBlueprint, LocationToSpawn, FRotator(0.f, 0.f, 0.f), SpawnInfo);
 	}
 	else
 	{

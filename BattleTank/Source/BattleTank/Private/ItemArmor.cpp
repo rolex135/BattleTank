@@ -1,11 +1,11 @@
 // Copyright MKProductions
 
 #include "BattleTank.h"
-#include "ItemAmmo.h"
+#include "ItemArmor.h"
 
 
 // Sets default values
-AItemAmmo::AItemAmmo()
+AItemArmor::AItemArmor()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
@@ -15,10 +15,9 @@ AItemAmmo::AItemAmmo()
 }
 
 // Called when the game starts or when spawned
-void AItemAmmo::BeginPlay()
+void AItemArmor::BeginPlay()
 {
-	MaxToAdd = MaxAmmoToAdd;
-	MinToAdd = MinAmmoToAdd;
+	MaxToAdd = MaxArmorToAdd;
+	MinToAdd = MinArmorToAdd;
 	Super::BeginPlay();
 }
-
