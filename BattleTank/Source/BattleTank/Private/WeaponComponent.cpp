@@ -74,6 +74,21 @@ float UWeaponComponent::GetCurrentWeaponLaunchSpeed() const
 	return CurrentWeaponLaunchSpeed;
 }
 
+float UWeaponComponent::GetProjectileLaunchSpeed() const
+{
+	return ProjectileLaunchSpeed;
+}
+
+float UWeaponComponent::GetIceBlastLaunchSpeed() const
+{
+	return IceBlastLaunchSpeed;
+}
+
+float UWeaponComponent::GetFlameThrowerLaunchSpeed() const
+{
+	return FlameThrowerLaunchSpeed;
+}
+
 void UWeaponComponent::SetCurrentWeapon(ECurrentWeapon WeaponToSet)
 {
 	CurrentWeapon = WeaponToSet;

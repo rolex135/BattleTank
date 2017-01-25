@@ -2,6 +2,7 @@
 
 #include "BattleTank.h"
 #include "TankAimingComponent.h"
+#include "WeaponComponent.h"
 #include "../Public/TankAIController.h"
 #include "Tank.h"
 
@@ -25,10 +26,34 @@ void ATankAIController::Tick(float DeltaSeconds)
 
 	auto AimingComponent = AITank->FindComponentByClass<UTankAimingComponent>();
 	AimingComponent->AimAt(PlayerTank->GetActorLocation());
-		
+	
+	//Change weapons based on distance between AI and player
+	float DistanceBetweenPlayer = (PlayerTank->GetActorLocation() - AITank->GetActorLocation()).Size();
+	auto WeaponComponent = AITank->FindComponentByClass<UWeaponComponent>();
+	if (DistanceBetweenPlayer < WeaponComponent->GetCurrentWeaponLaunchSpeed() && WeaponComponent->GetCurrentWeapon() != ECurrentWeapon::IceBlast)
+	{
+		WeaponComponent->SetCurrentWeapon(ECurrentWeapon::IceBlast);
+		UE_LOG(LogTemp, Warning, TEXT("Changed to Iceblast at: %f"), DistanceBetweenPlayer);
+	}
+	else if(DistanceBetweenPlayer > WeaponComponent->GetProjectileLaunchSpeed() && WeaponComponent->GetCurrentWeapon() != ECurrentWeapon::Projectile)
+	{
+		WeaponComponent->SetCurrentWeapon(ECurrentWeapon::Projectile);
+		UE_LOG(LogTemp, Warning, TEXT("Changed to Projectile at: %f"), DistanceBetweenPlayer);
+	}
+	else
+	{
+		//
+	}
+
+	//Fire if aim found
+	if (DistanceBetweenPlayer < WeaponComponent->GetFlameThrowerLaunchSpeed())
+	{
+		AimingComponent->ThrowFlame();
+	}
+
 	if (AimingComponent->GetFiringState() == EFiringState::Locked)
 	{
-		AimingComponent->Fire();
+			AimingComponent->Fire();
 	}
 }
 

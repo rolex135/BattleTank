@@ -40,6 +40,12 @@ public:
 	
 	float GetCurrentWeaponLaunchSpeed() const;
 
+	float GetProjectileLaunchSpeed() const;
+
+	float GetIceBlastLaunchSpeed() const;
+
+	float GetFlameThrowerLaunchSpeed() const;
+
 	ECurrentWeapon GetCurrentWeapon() const;
 
 
@@ -69,10 +75,10 @@ private:
 	float ProjectileLaunchSpeed = 8000.f;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
-	float IceBlastLaunchSpeed = 2000.f;
+	float IceBlastLaunchSpeed = 4000.f;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
-	float FlameThrowerLaunchSpeed = 3000.f;
+	float FlameThrowerLaunchSpeed = 2500.f;
 
 	int32 StartingAmmo = 10;
 };

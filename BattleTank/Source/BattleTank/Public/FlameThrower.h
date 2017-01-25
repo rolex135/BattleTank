@@ -19,8 +19,8 @@ public:
 	
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
-	float FireDamage = 5.f;
+	float FireDamage = 2.f;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
-	float FireDestroyDelay = 2.f;
+	float FireDestroyDelay = 0.1f;
 };
