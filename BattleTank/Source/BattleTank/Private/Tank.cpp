@@ -3,7 +3,6 @@
 #include "BattleTank.h"
 #include "Tank.h"
 
-
 // Sets default values
 ATank::ATank()
 {
@@ -15,6 +14,7 @@ void ATank::BeginPlay()
 {
 	Super::BeginPlay();
 	CurrentHealth = StartingHealth;
+	CurrentArmor = StartingArmor;
 }
 
 float ATank::TakeDamage(float DamageAmount, struct FDamageEvent const & DamageEvent, class AController * EventInstigator, AActor * DamageCauser){
@@ -22,7 +22,15 @@ float ATank::TakeDamage(float DamageAmount, struct FDamageEvent const & DamageEv
 	int32 DamagePoints = FPlatformMath::RoundToInt(DamageAmount);
 	int32 DamageToApply = FMath::Clamp(DamagePoints, 0, CurrentHealth);
 
-	CurrentHealth -= DamageToApply;
+	if (CurrentArmor > 0)
+	{
+		CurrentArmor -= DamageToApply;
+	}
+	else
+	{
+		CurrentHealth -= DamageToApply;
+	}
+
 	if (CurrentHealth <= 0)
 	{
 		OnDeath.Broadcast();
@@ -37,9 +45,17 @@ float ATank::GetHealthPercent() const
 
 void ATank::AddHealth(float HealthToAdd)
 {
-	CurrentHealth = (float)CurrentHealth + HealthToAdd;
-	if (CurrentHealth > StartingHealth)
-	{
-		CurrentHealth = StartingHealth;
-	}
+	int32 HealthPoints = FPlatformMath::RoundToInt(HealthToAdd);
+	CurrentHealth = CurrentHealth + FMath::Clamp(HealthPoints, 0, CurrentHealth);
+}
+
+void ATank::AddArmor(float ArmorToAdd)
+{
+	int32 ArmorPoints = FPlatformMath::RoundToInt(ArmorToAdd);
+	CurrentArmor = CurrentArmor + FMath::Clamp(ArmorPoints, 0, CurrentArmor);
+}
+
+float ATank::GetArmorPercent() const
+{
+	return (float)CurrentArmor / (float)StartingArmor;
 }
