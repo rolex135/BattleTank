@@ -19,7 +19,7 @@ public:
 
 	// Called when the game starts
 	virtual void BeginPlay() override;
-	
+
 	// Called every frame
 	virtual void TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction ) override;
 
@@ -39,7 +39,11 @@ private:
 
 	UTankSuspension* RightFront = nullptr;
 
-	float GetSuspensionZLocation(UTankSuspension* Suspension);
+	FVector GetSuspensionLocation(UTankSuspension* Suspension);
 	
+	FVector GetMaxSuspensionZLocation(UTankSuspension* Suspension);
+
 	void AddForceToSuspension(UTankSuspension* Suspension);
+
+	FHitResult GetResultWhenOnGround(UTankSuspension* Suspension);
 };

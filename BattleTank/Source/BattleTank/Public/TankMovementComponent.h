@@ -6,6 +6,7 @@
 
 class UTankTrack;
 class UTankFuel;
+class UTankSuspension;
 
 /**
  * Responsible for driving the tank tracks
@@ -18,7 +19,7 @@ class BATTLETANK_API UTankMovementComponent : public UNavMovementComponent
 public:
 
 	UFUNCTION(BlueprintCallable, Category = "Setup")
-	void Initialize(UTankTrack* LeftTrackToSet, UTankTrack* RightTrackToSet, UTankFuel* FuelToSet);
+	void Initialize(UTankFuel* FuelToSet, UTankSuspension* LeftBackToSet, UTankSuspension* LeftMiddleToSet, UTankSuspension* LeftFrontToSet, UTankSuspension* RightBackToSet, UTankSuspension* RightMiddleToSet, UTankSuspension* RightFrontToSet);
 
 	UFUNCTION(BlueprintCallable, Category = "Movement")
 	void IntendMoveForward(float Throw);
@@ -37,6 +38,18 @@ public:
 
 
 private:
+	UTankSuspension* LeftBack = nullptr;
+
+	UTankSuspension* LeftMiddle = nullptr;
+
+	UTankSuspension* LeftFront = nullptr;
+
+	UTankSuspension* RightBack = nullptr;
+
+	UTankSuspension* RightMiddle = nullptr;
+
+	UTankSuspension* RightFront = nullptr;
+
 	UTankTrack* LeftTrack = nullptr;
 
 	UTankTrack* RightTrack = nullptr;
